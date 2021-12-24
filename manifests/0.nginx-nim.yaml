@@ -1,0 +1,97 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-nim2
+  labels:
+    app: nginx-nim2
+spec:
+  selector:
+    matchLabels:
+      app: nginx-nim2
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: nginx-nim2
+    spec:
+      containers:
+      - name: nginx-nim2
+        image: your.registry.tld/nginx-nim2:tag
+        ports:
+        - name: https
+          containerPort: 443
+        - name: instancecounter
+          containerPort: 5000
+        env:
+          ### Instance counter Push mode
+          - name: STATS_PUSH_ENABLE
+            #value: "true"
+            value: "false"
+          #- name: STATS_PUSH_MODE
+          #  value: CUSTOM
+          #  value: NGINX_PUSH
+          #- name: STATS_PUSH_URL
+          #  value: "http://192.168.1.5/callHome"
+          #  value: "http://pushgateway.nginx.ff.lan"
+          ### Push interval in seconds
+          #- name: STATS_PUSH_INTERVAL
+          #  value: "10"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-nim2
+  labels:
+    app: nginx-nim2
+spec:
+  ports:
+  - name: https
+    port: 443
+  - name: counter
+    port: 5000
+  selector:
+    app: nginx-nim2
+  type: ClusterIP
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-nim2-grpc
+  labels:
+    app: nginx-nim2
+spec:
+  ports:
+  - name: grpc
+    port: 443
+    nodePort: 30443
+  selector:
+    app: nginx-nim2
+  type: NodePort
+
+---
+apiVersion: k8s.nginx.org/v1
+kind: VirtualServer
+metadata:
+  name: vs-nim2
+spec:
+  host: nim2.f5.ff.lan
+  tls:
+    secret: nim2.f5.ff.lan
+  upstreams:
+  - name: nginx-nim2
+    service: nginx-nim2
+    port: 443
+    tls:
+      enable: true
+  - name: nginx-nim2-counter
+    service: nginx-nim2
+    port: 5000
+  routes:
+  - path: /
+    action:
+      pass: nginx-nim2
+  - path: /counter
+    action:
+      pass: nginx-nim2-counter
