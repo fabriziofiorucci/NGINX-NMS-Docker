@@ -1,4 +1,4 @@
-# NGINX Instance Manager - Docker image
+# NGINX Instance Manager 2.x - Docker image
 
 ## Description
 
