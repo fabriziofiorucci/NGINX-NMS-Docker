@@ -18,22 +18,22 @@ The image can optionally be built with NGINX Instance Counter support (see https
 3. Build NIM Docker image using:
 
 ```
-./scripts/buildNIM.sh [NIM_DEBFILE] [target Docker image name] [counter enabled (true|false)] [auth username] [auth password]
+./scripts/buildNIM.sh [NIM_DEBFILE] [target Docker image name] [counter enabled (true|false)] [NIM auth username] [NIM auth password]
 
 for instance:
 
 ./scripts/buildNIM.sh ./nim-files/nms-instance-manager_2.0.0-433676695~focal_amd64.deb your.registry.tld/nginx-nim2:tag true admin myNimPassword
 ```
 
-this builds the image and pushes it to a private registry. The last parameter (to be set to either "true" or "false") specifies if NGINX Instance Counter (https://github.com/fabriziofiorucci/NGINX-InstanceCounter) shall be included in the image being built
+this builds the image and pushes it to a private registry. The "counter enabled" parameter (to be set to either "true" or "false") specifies if NGINX Instance Counter (https://github.com/fabriziofiorucci/NGINX-InstanceCounter) shall be included in the image being built
 
-4. Edit manifests/0.nginx-nim.yaml and specify the correct image by modifying the "image" line. Additionally modify the "env:" section if you need NGINX Instance Counter to push instances data to a remote collector
+4. Edit manifests/0.nginx-nim.yaml and specify the correct image by modifying the "image" line.
 
 ```
 image: your.registry.tld/nginx-nim2:tag
 ```
 
-5. If the instance counter was built in the image, configure the relevant environment variables, see the documentation at https://github.com/fabriziofiorucci/NGINX-InstanceCounter#for-kubernetesopenshift-1
+5. If the instance counter was built in the image, configure the relevant environment variables. See the documentation at https://github.com/fabriziofiorucci/NGINX-InstanceCounter#for-kubernetesopenshift-1
 
 ```
         env:
