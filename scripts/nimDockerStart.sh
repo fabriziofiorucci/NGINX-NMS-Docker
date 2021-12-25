@@ -1,19 +1,17 @@
 #!/bin/bash
 
-#CFGFILE=nim-files/nginx-manager.conf
-#LICFILE=nim-files/nginx-manager.lic
-MANIFEST=manifests/0.nginx-nim.yaml
 NAMESPACE=nginx-nim2
 
 case $1 in
 	'start')
 		kubectl create namespace $NAMESPACE
 
-		cd manifests/certs
+		pushd manifests/certs
 		./cert-install.sh install
-		cd ../..
+		cd ..
 
-		kubectl apply -f $MANIFEST -n $NAMESPACE
+		kubectl apply -n $NAMESPACE -f .
+		popd
 	;;
 	'stop')
 		kubectl delete namespace $NAMESPACE

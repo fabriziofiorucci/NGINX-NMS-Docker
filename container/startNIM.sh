@@ -4,11 +4,13 @@ if [ -f "/deployment/counter.enabled" ]
 then
 	export NGINX_CONTROLLER_TYPE=NGINX_MANAGEMENT_SYSTEM
 	export NGINX_CONTROLLER_FQDN="https://127.0.0.1:443"
-	export NGINX_CONTROLLER_USERNAME="__NIM_USERNAME__"
-	export NGINX_CONTROLLER_PASSWORD="__NIM_PASSWORD__"
+	export NGINX_CONTROLLER_USERNAME=$NIM_USERNAME
+	export NGINX_CONTROLLER_PASSWORD=$NIM_PASSWORD
 
 	python3 /deployment/app.py &
 fi
+
+/etc/nms/scripts/basic_passwords.sh $NIM_USERNAME $NIM_PASSWORD
 
 /etc/init.d/clickhouse-server start
 /etc/init.d/nginx start

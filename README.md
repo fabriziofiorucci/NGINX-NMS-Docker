@@ -18,38 +18,45 @@ The image can optionally be built with NGINX Instance Counter support (see https
 3. Build NIM Docker image using:
 
 ```
-./scripts/buildNIM.sh [NIM_DEBFILE] [target Docker image name] [counter enabled (true|false)] [NIM auth username] [NIM auth password]
+./scripts/buildNIM.sh [NIM_DEBFILE] [target Docker image name] [counter enabled (true|false)]
 
 for instance:
 
-./scripts/buildNIM.sh ./nim-files/nms-instance-manager_2.0.0-433676695~focal_amd64.deb your.registry.tld/nginx-nim2:tag true admin myNimPassword
+./scripts/buildNIM.sh ./nim-files/nms-instance-manager_2.0.0-433676695~focal_amd64.deb your.registry.tld/nginx-nim2:tag true
 ```
 
 this builds the image and pushes it to a private registry. The "counter enabled" parameter (to be set to either "true" or "false") specifies if NGINX Instance Counter (https://github.com/fabriziofiorucci/NGINX-InstanceCounter) shall be included in the image being built
 
-4. Edit manifests/0.nginx-nim.yaml and specify the correct image by modifying the "image" line.
+4. Edit manifests/0.nginx-nim.yaml and specify the correct image by modifying the "image" line and configure NIM username and password
 
 ```
 image: your.registry.tld/nginx-nim2:tag
+[...]
+env:
+  ### NGINX Instance Manager environment
+  - name: NIM_USERNAME
+    value: admin
+  - name: NIM_PASSWORD
+    value: nimadmin
 ```
 
 5. If the instance counter was built in the image, configure the relevant environment variables. See the documentation at https://github.com/fabriziofiorucci/NGINX-InstanceCounter#for-kubernetesopenshift-1
 
 ```
-        env:
-          ### Instance counter Push mode
-          - name: STATS_PUSH_ENABLE
-            #value: "true"
-            value: "false"
-          - name: STATS_PUSH_MODE
-            value: CUSTOM
-            #value: NGINX_PUSH
-          - name: STATS_PUSH_URL
-            value: "http://192.168.1.5/callHome"
-            #value: "http://pushgateway.nginx.ff.lan"
-          ### Push interval in seconds
-          - name: STATS_PUSH_INTERVAL
-            value: "10"
+env:
+  ### Instance counter Push mode
+  - name: STATS_PUSH_ENABLE
+    #value: "true"
+    value: "false"
+  - name: STATS_PUSH_MODE
+    value: CUSTOM
+    #value: NGINX_PUSH
+  - name: STATS_PUSH_URL
+    value: "http://192.168.1.5/callHome"
+    #value: "http://pushgateway.nginx.ff.lan"
+  ### Push interval in seconds
+  - name: STATS_PUSH_INTERVAL
+    value: "10"
 ```
 
 6. Check / modify files in `/manifests/certs` to customize the TLS certificate and key used for TLS offload
@@ -97,7 +104,7 @@ This repo has been tested with NIM 2.0
 ## Docker image build
 
 ```
-$ ./scripts/buildNIM.sh nim-files/nms-instance-manager_2.0.0-433676695~focal_amd64.deb registry.ff.lan:31005/nim2-docker:1.0 true admin nim
+$ ./scripts/buildNIM.sh nim-files/nms-instance-manager_2.0.0-433676695~focal_amd64.deb registry.ff.lan:31005/nim2-docker:1.0 true
 ==> Building NIM docker image
 Sending build context to Docker daemon  54.31MB
 Step 1/39 : FROM ubuntu:20.04

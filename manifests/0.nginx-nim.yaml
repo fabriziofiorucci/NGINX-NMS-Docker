@@ -23,19 +23,25 @@ spec:
         - name: instancecounter
           containerPort: 5000
         env:
+          ### NGINX Instance Manager environment
+          - name: NIM_USERNAME
+            value: admin
+          - name: NIM_PASSWORD
+            value: nimadmin
+
           ### Instance counter Push mode
           - name: STATS_PUSH_ENABLE
             #value: "true"
             value: "false"
-          #- name: STATS_PUSH_MODE
-          #  value: CUSTOM
-          #  value: NGINX_PUSH
-          #- name: STATS_PUSH_URL
-          #  value: "http://192.168.1.5/callHome"
-          #  value: "http://pushgateway.nginx.ff.lan"
+          - name: STATS_PUSH_MODE
+            value: CUSTOM
+            #value: NGINX_PUSH
+          - name: STATS_PUSH_URL
+            value: "http://192.168.1.5/callHome"
+            #value: "http://pushgateway.nginx.ff.lan"
           ### Push interval in seconds
-          #- name: STATS_PUSH_INTERVAL
-          #  value: "10"
+          - name: STATS_PUSH_INTERVAL
+            value: "10"
 
 ---
 apiVersion: v1

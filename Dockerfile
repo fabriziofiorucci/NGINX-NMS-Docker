@@ -1,17 +1,15 @@
 FROM ubuntu:20.04
 ARG NIM_DEBFILE
 ARG BUILD_WITH_COUNTER=false
-ARG NIM_USERNAME
-ARG NIM_PASSWORD
 
+# Initial setup
 RUN apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -q build-essential git nano curl jq wget gawk lsb-release rsyslog systemd
 RUN mkdir -p deployment/setup
 
+# NGINX Instance Manager 2.0
 COPY $NIM_DEBFILE /deployment/setup/nim.deb
-COPY ./container/startNIM.sh /deployment/startNIM.sh.tmp
-RUN cat /deployment/startNIM.sh.tmp | sed 's/__NIM_USERNAME__/'$NIM_USERNAME'/g' | sed 's/__NIM_PASSWORD__/'$NIM_PASSWORD'/g' > /deployment/startNIM.sh
-RUN rm /deployment/startNIM.sh.tmp
+COPY ./container/startNIM.sh /deployment/
 RUN chmod +x /deployment/startNIM.sh
 RUN wget https://docs.nginx.com/nginx-instance-manager/scripts/fetch-external-dependencies.sh -qO /deployment/setup/fetch-external-dependencies.sh
 
@@ -23,10 +21,10 @@ RUN rm *.deb
 RUN rm /etc/nginx/conf.d/default.conf
 COPY $NIM_DEBFILE /deployment/setup/nim.deb
 RUN apt-get -y install /deployment/setup/nim.deb
-RUN bash /etc/nms/scripts/basic_passwords.sh $NIM_USERNAME $NIM_PASSWORD
 RUN curl -s http://hg.nginx.org/nginx.org/raw-file/tip/xml/en/security_advisories.xml > /usr/share/nms/cve.xml
 RUN rm -r /deployment/setup
 
+# Optional NGINX Instance Counter
 WORKDIR /deployment
 RUN if [ "$BUILD_WITH_COUNTER" = "true" ] ; then apt-get install -y python3-pip python3-dev python3-simplejson; fi
 RUN if [ "$BUILD_WITH_COUNTER" = "true" ] ; then pip3 install fastapi uvicorn requests pandas xlsxwriter jinja2; fi
@@ -40,5 +38,5 @@ RUN if [ "$BUILD_WITH_COUNTER" = "true" ] ; then cp NGINX-InstanceCounter/nginx-
 RUN if [ "$BUILD_WITH_COUNTER" = "true" ] ; then cp NGINX-InstanceCounter/nginx-instance-counter/cveDB.py .; fi
 RUN if [ "$BUILD_WITH_COUNTER" = "true" ] ; then rm -rf NGINX-InstanceCounter; fi
 
-WORKDIR /data
+WORKDIR /deployment
 CMD /deployment/startNIM.sh
