@@ -28,6 +28,8 @@ spec:
             value: admin
           - name: NIM_PASSWORD
             value: nimadmin
+          - name: NIM_LICENSE
+            value: "<BASE64_ENCODED_LICENSE_FILE>"
 
           ### Instance counter Push mode
           - name: STATS_PUSH_ENABLE

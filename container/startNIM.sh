@@ -51,6 +51,12 @@ sleep 5
 
 chmod 666 /var/run/nms/*.sock
 
+# License activation
+if ((${#NIM_LICENSE[@]}))
+then
+	curl -X PUT -k https://127.0.0.1/api/platform/v1/license -u "$NIM_USERNAME:$NIM_PASSWORD" -d '{ "desiredState": { "content": "'$NIM_LICENSE'" }, "metadata": { "name": "license" } }' -H "Content-Type: application/json"
+fi
+
 while [ 1 ]
 do
 	sleep 60

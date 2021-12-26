@@ -27,7 +27,7 @@ for instance:
 
 this builds the image and pushes it to a private registry. The "counter enabled" parameter (to be set to either "true" or "false") specifies if NGINX Instance Counter (https://github.com/fabriziofiorucci/NGINX-InstanceCounter) shall be included in the image being built
 
-4. Edit manifests/0.nginx-nim.yaml and specify the correct image by modifying the "image" line and configure NIM username and password
+4. Edit manifests/0.nginx-nim.yaml and specify the correct image by modifying the "image" line and configure NIM username, password and the base64-encoded license file for automated license activation:
 
 ```
 image: your.registry.tld/nginx-nim2:tag
@@ -38,6 +38,14 @@ env:
     value: admin
   - name: NIM_PASSWORD
     value: nimadmin
+  - name: NIM_LICENSE
+    value: "<BASE64_ENCODED_LICENSE_FILE>"
+```
+
+To base64-encode the license file the following command can be used:
+
+```
+base64 -w0 NIM_LICENSE_FILENAME.lic
 ```
 
 5. If the instance counter was built in the image, configure the relevant environment variables. See the documentation at https://github.com/fabriziofiorucci/NGINX-InstanceCounter#for-kubernetesopenshift-1
