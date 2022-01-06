@@ -10,6 +10,7 @@ The image can optionally be built with NGINX Instance Counter support (see https
 - Kubernetes/Openshift cluster
 - NGINX Ingress Controller with `VirtualServer` CRD support (see https://docs.nginx.com/nginx-ingress-controller/configuration/virtualserver-and-virtualserverroute-resources/)
 - Access to F5/NGINX downloads to fetch NIM 2.x installation .deb file
+- Linux host running Docker to build the image
 
 ## How to build
 
@@ -27,7 +28,7 @@ for instance:
 
 this builds the image and pushes it to a private registry. The "counter enabled" parameter (to be set to either "true" or "false") specifies if NGINX Instance Counter (https://github.com/fabriziofiorucci/NGINX-InstanceCounter) shall be included in the image being built
 
-4. Edit manifests/0.nginx-nim.yaml and specify the correct image by modifying the "image" line and configure NIM username, password and the base64-encoded license file for automated license activation:
+4. Edit manifests/1.nginx-nim.yaml and specify the correct image by modifying the "image" line and configure NIM username, password and the base64-encoded license file for automated license activation:
 
 ```
 image: your.registry.tld/nginx-nim2:tag
@@ -46,6 +47,23 @@ To base64-encode the license file the following command can be used:
 
 ```
 base64 -w0 NIM_LICENSE_FILENAME.lic
+```
+
+Additionally, parameters user by NIM to connect to ClickHouse can be configured:
+
+```
+env:
+  [...]
+  - name: NIM_CLICKHOUSE_ADDRESS
+    value: clickhouse
+  - name: NIM_CLICKHOUSE_PORT
+    value: "9000"
+  ### If username is not set to "default", the clickhouse-users ConfigMap in 0.clickhouse.yaml shall be updated accordingly
+  - name: NIM_CLICKHOUSE_USERNAME
+    value: "default"
+  ### If password is not set to "NGINXr0cks", the clickhouse-users ConfigMap in 0.clickhouse.yaml shall be updated accordingly
+  - name: NIM_CLICKHOUSE_PASSWORD
+    value: "NGINXr0cks"
 ```
 
 5. If the instance counter was built in the image, configure the relevant environment variables. See the documentation at https://github.com/fabriziofiorucci/NGINX-InstanceCounter#for-kubernetesopenshift-1
@@ -85,7 +103,15 @@ NIM gRPC port: nim2.f5.ff.lan:30443
 Instance counter REST API (if enabled at build time - see the documentation at https://github.com/fabriziofiorucci/NGINX-InstanceCounter):
 - https://nim2.f5.ff.lan/counter/instances
 - https://nim2.f5.ff.lan/counter/metrics
-- Push mode (configured through env variables in manifests/0.nginx-nim.yaml)
+- Push mode (configured through env variables in manifests/1.nginx-nim.yaml)
+```
+
+running pods will be:
+
+```
+NAME                          READY   STATUS    RESTARTS   AGE
+clickhouse-7bc96d6d56-lnnhl   1/1     Running   0          82m
+nginx-nim2-889c98d95-qhqlv    1/1     Running   0          82m
 ```
 
 9. After installing the nginx-agent on NGINX Instances to be managed with NIM, update the file `/etc/nginx-agent/nginx-agent.conf` and modify the line:
@@ -147,8 +173,9 @@ service/nginx-nim2-grpc created
 virtualserver.k8s.nginx.org/vs-nim2 created
 
 $ kubectl get pods -n nginx-nim2 -o wide
-NAME                          READY   STATUS    RESTARTS   AGE   IP             NODE       NOMINATED NODE   READINESS GATES
-nginx-nim2-67d5b48b7d-f76hf   1/1     Running   0          32s   10.244.1.203   f5-node1   <none>           <none>
+NAME                          READY   STATUS    RESTARTS   AGE   IP           NODE       NOMINATED NODE   READINESS GATES
+clickhouse-7bc96d6d56-lnnhl   1/1     Running   0          83m   10.244.1.7   f5-node1   <none>           <none>
+nginx-nim2-889c98d95-qhqlv    1/1     Running   0          83m   10.244.1.5   f5-node1   <none>           <none>
 ```
 
 NIM GUI is now reachable at:

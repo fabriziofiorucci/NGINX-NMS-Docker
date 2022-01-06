@@ -31,16 +31,25 @@ spec:
           - name: NIM_LICENSE
             value: "<BASE64_ENCODED_LICENSE_FILE>"
 
+          - name: NIM_CLICKHOUSE_ADDRESS
+            value: clickhouse
+          - name: NIM_CLICKHOUSE_PORT
+            value: "9000"
+          ### If username is not set to "default", the clickhouse-users ConfigMap in 0.clickhouse.yaml shall be updated accordingly
+          - name: NIM_CLICKHOUSE_USERNAME
+            value: "default"
+          ### If password is not set to "NGINXr0cks", the clickhouse-users ConfigMap in 0.clickhouse.yaml shall be updated accordingly
+          - name: NIM_CLICKHOUSE_PASSWORD
+            value: "NGINXr0cks"
+
           ### Instance counter Push mode
           - name: STATS_PUSH_ENABLE
-            #value: "true"
             value: "false"
           - name: STATS_PUSH_MODE
             value: CUSTOM
             #value: NGINX_PUSH
           - name: STATS_PUSH_URL
             value: "http://192.168.1.5/callHome"
-            #value: "http://pushgateway.nginx.ff.lan"
           ### Push interval in seconds
           - name: STATS_PUSH_INTERVAL
             value: "10"
@@ -77,29 +86,3 @@ spec:
   selector:
     app: nginx-nim2
   type: NodePort
-
----
-apiVersion: k8s.nginx.org/v1
-kind: VirtualServer
-metadata:
-  name: vs-nim2
-spec:
-  host: nim2.f5.ff.lan
-  tls:
-    secret: nim2.f5.ff.lan
-  upstreams:
-  - name: nginx-nim2
-    service: nginx-nim2
-    port: 443
-    tls:
-      enable: true
-  - name: nginx-nim2-counter
-    service: nginx-nim2
-    port: 5000
-  routes:
-  - path: /
-    action:
-      pass: nginx-nim2
-  - path: /counter
-    action:
-      pass: nginx-nim2-counter
