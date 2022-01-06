@@ -15,7 +15,7 @@ The image can optionally be built with NGINX Instance Counter support (see https
 ## How to build
 
 1. Clone this repo
-2. Download NIM 2.x .deb installation file for Ubuntu 20.04 "focal_amd64" (ie. nms-instance-manager_2.0.0-433676695~focal_amd64.deb) and copy it into nim-files/
+2. Download NIM 2.x .deb installation file for Ubuntu 20.04 "focal_amd64" (ie. `nms-instance-manager_2.0.0-433676695~focal_amd64.deb`) and copy it into `nim-files/`
 3. Build NIM Docker image using:
 
 ```
@@ -28,7 +28,7 @@ for instance:
 
 this builds the image and pushes it to a private registry. The "counter enabled" parameter (to be set to either "true" or "false") specifies if NGINX Instance Counter (https://github.com/fabriziofiorucci/NGINX-InstanceCounter) shall be included in the image being built
 
-4. Edit manifests/1.nginx-nim.yaml and specify the correct image by modifying the "image" line and configure NIM username, password and the base64-encoded license file for automated license activation:
+4. Edit `manifests/1.nginx-nim.yaml` and specify the correct image by modifying the "image" line and configure NIM username, password and the base64-encoded license file for automated license activation:
 
 ```
 image: your.registry.tld/nginx-nim2:tag
