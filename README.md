@@ -7,7 +7,7 @@ The image can optionally be built with NGINX Instance Counter support (see https
 
 ## Prerequisites
 
-- Kubernetes/Openshift cluster
+- Kubernetes/Openshift cluster with dynamic storage provisioner enabled: see the [example](/contrib/pvc-provisioner)
 - NGINX Ingress Controller with `VirtualServer` CRD support (see https://docs.nginx.com/nginx-ingress-controller/configuration/virtualserver-and-virtualserverroute-resources/)
 - Access to F5/NGINX downloads to fetch NIM 2.x installation .deb file
 - Linux host running Docker to build the image
@@ -132,6 +132,12 @@ and then restart nginx-agent
 ## Tested NIM releases
 
 This repo has been tested with NIM 2.0
+
+
+## Additional features
+
+- [Grafana dashboard for telemetry](/contrib/grafana)
+
 
 # Example
 
