@@ -14,3 +14,5 @@ To configure the bundled Grafana container follow these steps:
 7. Click "Upload JSON file" and select the file `contrib/NGINX_NIM2_Telemetry_Grafana_Dashboard.json`
 8. Click import
 9. The NGINX NIM2 telemetry dashboard is up and running
+
+<img src="/contrib/grafana/grafana-dashboard.png"/>
