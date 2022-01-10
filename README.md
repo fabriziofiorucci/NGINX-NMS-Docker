@@ -97,6 +97,7 @@ env:
 8. After starting NIM2 it will be accessible at:
 
 NIM GUI: `https://nim2.f5.ff.lan`
+
 NIM gRPC port: `nim2.f5.ff.lan:30443`
 
 Instance counter REST API (if enabled at build time - see the documentation at `https://github.com/fabriziofiorucci/NGINX-InstanceCounter`):
@@ -106,7 +107,7 @@ Instance counter REST API (if enabled at build time - see the documentation at `
 
 Grafana dashboard: `https://grafana.nim2.f5.ff.lan` - see [configuration details](/contrib/grafana)
 
-running pods will be:
+Running pods are:
 
 ```
 $ kubectl get pods -n nginx-nim2
