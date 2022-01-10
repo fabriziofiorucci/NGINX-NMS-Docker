@@ -96,17 +96,15 @@ env:
 
 8. After starting NIM2 it will be accessible at:
 
-```
-NIM GUI: https://nim2.f5.ff.lan
-NIM gRPC port: nim2.f5.ff.lan:30443
+NIM GUI: `https://nim2.f5.ff.lan`
+NIM gRPC port: `nim2.f5.ff.lan:30443`
 
-Instance counter REST API (if enabled at build time - see the documentation at https://github.com/fabriziofiorucci/NGINX-InstanceCounter):
-- https://nim2.f5.ff.lan/counter/instances
-- https://nim2.f5.ff.lan/counter/metrics
-- Push mode (configured through env variables in manifests/1.nginx-nim.yaml)
+Instance counter REST API (if enabled at build time - see the documentation at `https://github.com/fabriziofiorucci/NGINX-InstanceCounter`):
+- `https://nim2.f5.ff.lan/counter/instances`
+- `https://nim2.f5.ff.lan/counter/metrics`
+- Push mode (configured through env variables in `manifests/1.nginx-nim.yaml`)
 
-Grafana dashboard: https://grafana.nim2.f5.ff.lan - see [configuration details](/contrib/grafana)
-```
+Grafana dashboard: `https://grafana.nim2.f5.ff.lan` - see [configuration details](/contrib/grafana)
 
 running pods will be:
 
