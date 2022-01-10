@@ -110,11 +110,11 @@ Grafana dashboard: `https://grafana.nim2.f5.ff.lan` - see [configuration details
 Running pods are:
 
 ```
-$ kubectl get pods -n nginx-nim2
-NAME                          READY   STATUS    RESTARTS   AGE
-clickhouse-7bc96d6d56-jthtf   1/1     Running   0          12s
-grafana-6f58d455c7-8lk64      1/1     Running   0          12s
-nginx-nim2-679987c54d-7rl6b   1/1     Running   0          12s
+$ kubectl get pods -n nginx-nim2 -o wide
+NAME                          READY   STATUS    RESTARTS   AGE    IP            NODE       NOMINATED NODE   READINESS GATES
+clickhouse-7bc96d6d56-jthtf   1/1     Running   0          5m8s   10.244.1.65   f5-node1   <none>           <none>
+grafana-6f58d455c7-8lk64      1/1     Running   0          5m8s   10.244.2.80   f5-node2   <none>           <none>
+nginx-nim2-679987c54d-7rl6b   1/1     Running   0          5m8s   10.244.1.64   f5-node1   <none>           <none>
 ```
 
 9. After installing the nginx-agent on NGINX Instances to be managed with NIM2, update the file `/etc/nginx-agent/nginx-agent.conf` and modify the line:
@@ -182,9 +182,10 @@ service/nginx-nim2-grpc created
 virtualserver.k8s.nginx.org/vs-nim2 created
 
 $ kubectl get pods -n nginx-nim2 -o wide
-NAME                          READY   STATUS    RESTARTS   AGE   IP           NODE       NOMINATED NODE   READINESS GATES
-clickhouse-7bc96d6d56-lnnhl   1/1     Running   0          83m   10.244.1.7   f5-node1   <none>           <none>
-nginx-nim2-889c98d95-qhqlv    1/1     Running   0          83m   10.244.1.5   f5-node1   <none>           <none>
+NAME                          READY   STATUS    RESTARTS   AGE    IP            NODE       NOMINATED NODE   READINESS GATES
+clickhouse-7bc96d6d56-jthtf   1/1     Running   0          5m8s   10.244.1.65   f5-node1   <none>           <none>
+grafana-6f58d455c7-8lk64      1/1     Running   0          5m8s   10.244.2.80   f5-node2   <none>           <none>
+nginx-nim2-679987c54d-7rl6b   1/1     Running   0          5m8s   10.244.1.64   f5-node1   <none>           <none>
 ```
 
 NIM GUI is now reachable at:
