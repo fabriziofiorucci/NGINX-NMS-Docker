@@ -94,7 +94,7 @@ env:
 ./scripts/nimDockerStart.sh stop
 ```
 
-8. After starting NIM it will be accessible at:
+8. After starting NIM2 it will be accessible at:
 
 ```
 NIM GUI: https://nim2.f5.ff.lan
@@ -104,17 +104,21 @@ Instance counter REST API (if enabled at build time - see the documentation at h
 - https://nim2.f5.ff.lan/counter/instances
 - https://nim2.f5.ff.lan/counter/metrics
 - Push mode (configured through env variables in manifests/1.nginx-nim.yaml)
+
+Grafana dashboard: https://grafana.nim2.f5.ff.lan - see [configuration details](/contrib/grafana)
 ```
 
 running pods will be:
 
 ```
+$ kubectl get pods -n nginx-nim2
 NAME                          READY   STATUS    RESTARTS   AGE
-clickhouse-7bc96d6d56-lnnhl   1/1     Running   0          82m
-nginx-nim2-889c98d95-qhqlv    1/1     Running   0          82m
+clickhouse-7bc96d6d56-jthtf   1/1     Running   0          12s
+grafana-6f58d455c7-8lk64      1/1     Running   0          12s
+nginx-nim2-679987c54d-7rl6b   1/1     Running   0          12s
 ```
 
-9. After installing the nginx-agent on NGINX Instances to be managed with NIM, update the file `/etc/nginx-agent/nginx-agent.conf` and modify the line:
+9. After installing the nginx-agent on NGINX Instances to be managed with NIM2, update the file `/etc/nginx-agent/nginx-agent.conf` and modify the line:
 
 ```
 grpcPort: 443
