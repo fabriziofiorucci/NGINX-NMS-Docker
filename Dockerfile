@@ -29,14 +29,14 @@ WORKDIR /deployment
 RUN if [ "$BUILD_WITH_COUNTER" = "true" ] ; then apt-get install -y python3-pip python3-dev python3-simplejson; fi
 RUN if [ "$BUILD_WITH_COUNTER" = "true" ] ; then pip3 install fastapi uvicorn requests pandas xlsxwriter jinja2; fi
 RUN if [ "$BUILD_WITH_COUNTER" = "true" ] ; then touch /deployment/counter.enabled; fi
-RUN if [ "$BUILD_WITH_COUNTER" = "true" ] ; then git clone https://github.com/fabriziofiorucci/NGINX-InstanceCounter; fi
-RUN if [ "$BUILD_WITH_COUNTER" = "true" ] ; then cp NGINX-InstanceCounter/nginx-instance-counter/app.py .; fi
-RUN if [ "$BUILD_WITH_COUNTER" = "true" ] ; then cp NGINX-InstanceCounter/nginx-instance-counter/bigiq.py .; fi
-RUN if [ "$BUILD_WITH_COUNTER" = "true" ] ; then cp NGINX-InstanceCounter/nginx-instance-counter/nim.py .; fi
-RUN if [ "$BUILD_WITH_COUNTER" = "true" ] ; then cp NGINX-InstanceCounter/nginx-instance-counter/nms.py .; fi
-RUN if [ "$BUILD_WITH_COUNTER" = "true" ] ; then cp NGINX-InstanceCounter/nginx-instance-counter/nc.py .; fi
-RUN if [ "$BUILD_WITH_COUNTER" = "true" ] ; then cp NGINX-InstanceCounter/nginx-instance-counter/cveDB.py .; fi
-RUN if [ "$BUILD_WITH_COUNTER" = "true" ] ; then rm -rf NGINX-InstanceCounter; fi
+RUN if [ "$BUILD_WITH_COUNTER" = "true" ] ; then git clone https://github.com/fabriziofiorucci/F5-Telemetry-Tracker; fi
+RUN if [ "$BUILD_WITH_COUNTER" = "true" ] ; then cp F5-Telemetry-Tracker/nginx-instance-counter/app.py .; fi
+RUN if [ "$BUILD_WITH_COUNTER" = "true" ] ; then cp F5-Telemetry-Tracker/nginx-instance-counter/bigiq.py .; fi
+RUN if [ "$BUILD_WITH_COUNTER" = "true" ] ; then cp F5-Telemetry-Tracker/nginx-instance-counter/nim.py .; fi
+RUN if [ "$BUILD_WITH_COUNTER" = "true" ] ; then cp F5-Telemetry-Tracker/nginx-instance-counter/nms.py .; fi
+RUN if [ "$BUILD_WITH_COUNTER" = "true" ] ; then cp F5-Telemetry-Tracker/nginx-instance-counter/nc.py .; fi
+RUN if [ "$BUILD_WITH_COUNTER" = "true" ] ; then cp F5-Telemetry-Tracker/nginx-instance-counter/cveDB.py .; fi
+RUN if [ "$BUILD_WITH_COUNTER" = "true" ] ; then rm -rf F5-Telemetry-Tracker; fi
 
 WORKDIR /deployment
 CMD /deployment/startNIM.sh
