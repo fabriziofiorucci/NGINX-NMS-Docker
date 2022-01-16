@@ -19,14 +19,14 @@ The image can optionally be built with F5 Telemetry Tracker support (see https:/
 3. Build NIM Docker image using:
 
 ```
-./scripts/buildNIM.sh [NIM_DEBFILE] [target Docker image name] [counter enabled (true|false)]
+./scripts/buildNIM.sh [NIM_DEBFILE] [target Docker image name] [F5 Telemetry Tracker enabled (true|false)]
 
 for instance:
 
 ./scripts/buildNIM.sh ./nim-files/nms-instance-manager_2.0.0-433676695~focal_amd64.deb your.registry.tld/nginx-nim2:tag true
 ```
 
-this builds the image and pushes it to a private registry. The "counter enabled" parameter (to be set to either "true" or "false") specifies if F5 Telemetry Tracker (https://github.com/fabriziofiorucci/F5-Telemetry-Tracker) shall be included in the image being built
+this builds the image and pushes it to a private registry. The "F5 Telemetry Tracker enabled" parameter (to be set to either "true" or "false") specifies if F5 Telemetry Tracker (https://github.com/fabriziofiorucci/F5-Telemetry-Tracker) shall be included in the image being built
 
 4. Edit `manifests/1.nginx-nim.yaml` and specify the correct image by modifying the "image" line and configure NIM username, password and the base64-encoded license file for automated license activation:
 
@@ -101,8 +101,8 @@ NIM GUI: `https://nim2.f5.ff.lan`
 NIM gRPC port: `nim2.f5.ff.lan:30443`
 
 F5 Telemetry Tracker REST API (if enabled at build time - see the documentation at `https://github.com/fabriziofiorucci/F5-Telemetry-Tracker`):
-- `https://nim2.f5.ff.lan/counter/instances`
-- `https://nim2.f5.ff.lan/counter/metrics`
+- `https://nim2.f5.ff.lan/f5tt/instances`
+- `https://nim2.f5.ff.lan/f5tt/metrics`
 - Push mode (configured through env variables in `manifests/1.nginx-nim.yaml`)
 
 Grafana dashboard: `https://grafana.nim2.f5.ff.lan` - see [configuration details](/contrib/grafana)
@@ -191,7 +191,7 @@ nginx-nim2-679987c54d-7rl6b   1/1     Running   0          5m8s   10.244.1.64   
 NIM GUI is now reachable at:
 - Web GUI: `https://nim2.f5.ff.lan`
 - gRPC: `nim2.f5.ff.lan:30443`
-- F5 Telemetry Tracker: `https://nim2.f5.ff.lan/counter/instances` and `https://nim2.f5.ff.lan/counter/metrics` and push mode
+- F5 Telemetry Tracker: `https://nim2.f5.ff.lan/f5tt/instances` and `https://nim2.f5.ff.lan/f5tt/metrics` and push mode
 
 ## Stopping NIM
 

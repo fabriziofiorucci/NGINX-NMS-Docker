@@ -12,16 +12,16 @@ spec:
     port: 443
     tls:
       enable: true
-  - name: nginx-nim2-counter
+  - name: nginx-nim2-f5tt
     service: nginx-nim2
     port: 5000
   routes:
   - path: /
     action:
       pass: nginx-nim2
-  - path: /counter
+  - path: /f5tt
     action:
-      pass: nginx-nim2-counter
+      pass: nginx-nim2-f5tt
 
 ---
 apiVersion: k8s.nginx.org/v1

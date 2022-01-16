@@ -20,7 +20,7 @@ spec:
         ports:
         - name: https
           containerPort: 443
-        - name: instancecounter
+        - name: f5tt
           containerPort: 5000
         env:
           ### NGINX Instance Manager environment
@@ -65,7 +65,7 @@ spec:
   ports:
   - name: https
     port: 443
-  - name: counter
+  - name: f5tt
     port: 5000
   selector:
     app: nginx-nim2

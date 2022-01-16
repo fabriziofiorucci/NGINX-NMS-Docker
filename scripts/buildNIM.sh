@@ -2,7 +2,7 @@
 
 if [ "$3" = "" ]
 then
-	echo "$0 [nim-debfile] [image name] [counter enabled (true|false)]"
+	echo "$0 [nim-debfile] [image name] [f5tt enabled (true|false)]"
 	exit
 fi
 
