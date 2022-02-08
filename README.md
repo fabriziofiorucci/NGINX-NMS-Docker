@@ -15,7 +15,7 @@ The image can optionally be built with F5 Telemetry Tracker support (see https:/
 ## How to build
 
 1. Clone this repo
-2. Download NIM 2.x .deb installation file for Ubuntu 20.04 "focal_amd64" (ie. `nms-instance-manager_2.0.0-433676695~focal_amd64.deb`) and copy it into `nim-files/`
+2. Download NIM 2.x .deb installation file for Ubuntu 20.04 "focal_amd64" (ie. `nms-instance-manager_2.0.1-457137034~focal_amd64.deb`) and copy it into `nim-files/`
 3. Build NIM Docker image using:
 
 ```
@@ -23,7 +23,7 @@ The image can optionally be built with F5 Telemetry Tracker support (see https:/
 
 for instance:
 
-./scripts/buildNIM.sh ./nim-files/nms-instance-manager_2.0.0-433676695~focal_amd64.deb your.registry.tld/nginx-nim2:tag true
+./scripts/buildNIM.sh ./nim-files/nms-instance-manager_2.0.1-457137034~focal_amd64.deb your.registry.tld/nginx-nim2:tag true
 ```
 
 this builds the image and pushes it to a private registry. The "F5 Telemetry Tracker enabled" parameter (to be set to either "true" or "false") specifies if F5 Telemetry Tracker (https://github.com/fabriziofiorucci/F5-Telemetry-Tracker) shall be included in the image being built
@@ -147,7 +147,7 @@ This repo has been tested with NIM 2.0
 ## Docker image build
 
 ```
-$ ./scripts/buildNIM.sh nim-files/nms-instance-manager_2.0.0-433676695~focal_amd64.deb registry.ff.lan:31005/nim2-docker:1.0 true
+$ ./scripts/buildNIM.sh nim-files/nms-instance-manager_2.0.1-457137034~focal_amd64.deb registry.ff.lan:31005/nim2-docker:1.0 true
 ==> Building NIM docker image
 Sending build context to Docker daemon  54.31MB
 Step 1/39 : FROM ubuntu:20.04
