@@ -1,34 +1,34 @@
-# NGINX Instance Manager 2.x - Docker image
+# NGINX Instance Manager 2 - Docker image
 
 ## Description
 
-This repo creates a docker image for NGINX Instance Manager 2.x (NIM, https://docs.nginx.com/nginx-instance-manager/) to run it on Kubernetes/Openshift.
+This repo creates a docker image for NGINX Instance Manager >= 2.1 (https://docs.nginx.com/nginx-instance-manager/) to run it on Kubernetes/Openshift.
 The image can optionally be built with F5 Telemetry Tracker support (see https://github.com/fabriziofiorucci/F5-Telemetry-Tracker)
 
 ## Prerequisites
 
 - Kubernetes/Openshift cluster with dynamic storage provisioner enabled: see the [example](/contrib/pvc-provisioner)
 - NGINX Ingress Controller with `VirtualServer` CRD support (see https://docs.nginx.com/nginx-ingress-controller/configuration/virtualserver-and-virtualserverroute-resources/)
-- Access to F5/NGINX downloads to fetch NIM 2.x installation .deb file
+- Access to F5/NGINX downloads to fetch NGINX Instance Manager >= 2.1 installation .deb file
 - Linux host running Docker to build the image
 
 ## How to build
 
 1. Clone this repo
-2. Download NIM 2.x .deb installation file for Ubuntu 20.04 "focal_amd64" (ie. `nms-instance-manager_2.0.1-457137034~focal_amd64.deb`) and copy it into `nim-files/`
-3. Build NIM Docker image using:
+2. Download NGINX Instance Manager >= 2.1 .deb installation file for Ubuntu 20.04 "focal_amd64" (ie. `nms-instance-manager_2.1.0-466409269~focal_amd64.deb`) and copy it into `nim-files/`
+3. Build NGINX Instance Manager Docker image using:
 
 ```
 ./scripts/buildNIM.sh [NIM_DEBFILE] [target Docker image name] [F5 Telemetry Tracker enabled (true|false)]
 
 for instance:
 
-./scripts/buildNIM.sh ./nim-files/nms-instance-manager_2.0.1-457137034~focal_amd64.deb your.registry.tld/nginx-nim2:tag true
+./scripts/buildNIM.sh ./nim-files/nms-instance-manager_2.1.0-466409269~focal_amd64.deb your.registry.tld/nginx-nim2:tag true
 ```
 
 this builds the image and pushes it to a private registry. The "F5 Telemetry Tracker enabled" parameter (to be set to either "true" or "false") specifies if F5 Telemetry Tracker (https://github.com/fabriziofiorucci/F5-Telemetry-Tracker) shall be included in the image being built
 
-4. Edit `manifests/1.nginx-nim.yaml` and specify the correct image by modifying the "image" line and configure NIM username, password and the base64-encoded license file for automated license activation:
+4. Edit `manifests/1.nginx-nim.yaml` and specify the correct image by modifying the "image" line and configure NGINX Instance Manager username, password and the base64-encoded license file for automated license activation:
 
 ```
 image: your.registry.tld/nginx-nim2:tag
@@ -49,7 +49,7 @@ To base64-encode the license file the following command can be used:
 base64 -w0 NIM_LICENSE_FILENAME.lic
 ```
 
-Additionally, parameters user by NIM to connect to ClickHouse can be configured:
+Additionally, parameters user by NGINX Instance Manager to connect to ClickHouse can be configured:
 
 ```
 env:
@@ -94,11 +94,11 @@ env:
 ./scripts/nimDockerStart.sh stop
 ```
 
-8. After starting NIM2 it will be accessible at:
+8. After starting NGINX Instance Manager 2 it will be accessible at:
 
-NIM GUI: `https://nim2.f5.ff.lan`
+NGINX Instance Manager GUI: `https://nim2.f5.ff.lan`
 
-NIM gRPC port: `nim2.f5.ff.lan:30443`
+NGINX Instance Manager gRPC port: `nim2.f5.ff.lan:30443`
 
 F5 Telemetry Tracker REST API (if enabled at build time - see the documentation at `https://github.com/fabriziofiorucci/F5-Telemetry-Tracker`):
 - `https://nim2.f5.ff.lan/f5tt/instances`
@@ -117,7 +117,7 @@ grafana-6f58d455c7-8lk64      1/1     Running   0          5m8s   10.244.2.80   
 nginx-nim2-679987c54d-7rl6b   1/1     Running   0          5m8s   10.244.1.64   f5-node1   <none>           <none>
 ```
 
-9. After installing the nginx-agent on NGINX Instances to be managed with NIM2, update the file `/etc/nginx-agent/nginx-agent.conf` and modify the line:
+9. After installing the nginx-agent on NGINX Instances to be managed with NGINX Instance Manager 2, update the file `/etc/nginx-agent/nginx-agent.conf` and modify the line:
 
 ```
 grpcPort: 443
@@ -132,9 +132,9 @@ grpcPort: 30443
 and then restart nginx-agent
 
 
-## Tested NIM releases
+## Tested NGINX Instance Manager releases
 
-This repo has been tested with NIM 2.0
+This repo has been tested with NIM 2.1.0
 
 
 ## Additional features
@@ -147,7 +147,7 @@ This repo has been tested with NIM 2.0
 ## Docker image build
 
 ```
-$ ./scripts/buildNIM.sh nim-files/nms-instance-manager_2.0.1-457137034~focal_amd64.deb registry.ff.lan:31005/nim2-docker:1.0 true
+$ ./scripts/buildNIM.sh nim-files/nms-instance-manager_2.1.0-466409269~focal_amd64.deb registry.ff.lan:31005/nim2-docker:1.0 true
 ==> Building NIM docker image
 Sending build context to Docker daemon  54.31MB
 Step 1/39 : FROM ubuntu:20.04
@@ -165,7 +165,7 @@ The push refers to repository [registry.ff.lan:31005/nim2-docker]
 1.6: digest: sha256:74d81dfcfd63929d04b1243d345d4e6f3d66b772805e74204f0e03bca885b218 size: 7008
 ```
 
-## Starting NIM
+## Starting NGINX Instance Manager
 
 ```
 $ ./scripts/nimDockerStart.sh start
@@ -188,12 +188,12 @@ grafana-6f58d455c7-8lk64      1/1     Running   0          5m8s   10.244.2.80   
 nginx-nim2-679987c54d-7rl6b   1/1     Running   0          5m8s   10.244.1.64   f5-node1   <none>           <none>
 ```
 
-NIM GUI is now reachable at:
+NGINX Instance Manager GUI is now reachable at:
 - Web GUI: `https://nim2.f5.ff.lan`
 - gRPC: `nim2.f5.ff.lan:30443`
 - F5 Telemetry Tracker: `https://nim2.f5.ff.lan/f5tt/instances` and `https://nim2.f5.ff.lan/f5tt/metrics` and push mode
 
-## Stopping NIM
+## Stopping NGINX Instance Manager
 
 ```
 $ ./scripts/nimDockerStart.sh stop

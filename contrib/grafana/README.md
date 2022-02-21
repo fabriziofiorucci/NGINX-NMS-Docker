@@ -15,4 +15,8 @@ To configure the bundled Grafana container follow these steps:
 8. Click import
 9. The NGINX NIM2 telemetry dashboard is up and running
 
-<img src="/contrib/grafana/grafana-dashboard.png"/>
+<img src="/contrib/grafana/grafana-dashboard.1.png"/>
+
+<img src="/contrib/grafana/grafana-dashboard.2.png"/>
+
+<img src="/contrib/grafana/grafana-dashboard.3.png"/>

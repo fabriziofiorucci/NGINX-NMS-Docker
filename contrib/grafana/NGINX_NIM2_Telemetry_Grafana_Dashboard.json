@@ -22,13 +22,13 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 5,
-  "iteration": 1641768077362,
+  "id": 1,
+  "iteration": 1644360512248,
   "links": [],
   "liveNow": false,
   "panels": [
     {
-      "collapsed": false,
+      "collapsed": true,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -36,370 +36,476 @@
         "y": 0
       },
       "id": 10,
-      "panels": [],
-      "repeat": "nginx_instance",
-      "title": "NGINX",
-      "type": "row"
-    },
-    {
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "decimals": 0,
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 1
-      },
-      "id": 13,
-      "options": {
-        "legend": {
-          "calcs": [
-            "lastNotNull",
-            "min",
-            "mean",
-            "max"
-          ],
-          "displayMode": "table",
-          "placement": "right"
-        },
-        "tooltip": {
-          "mode": "single"
-        }
-      },
-      "targets": [
+      "panels": [
         {
-          "database": "nms",
-          "datasource": {
-            "type": "vertamedia-clickhouse-datasource",
-            "uid": "kXXNDeonk"
-          },
-          "dateColDataType": "",
-          "dateLoading": false,
-          "dateTimeColDataType": "timestamp",
-          "dateTimeType": "DATETIME",
-          "datetimeLoading": false,
-          "extrapolate": true,
-          "format": "time_series",
-          "formattedQuery": "SELECT $timeSeries as t, count() FROM $table WHERE $timeFilter GROUP BY t ORDER BY t",
-          "interval": "",
-          "intervalFactor": 1,
-          "query": "SELECT\n    $timeSeries as t,\n    name,avg(value)\nFROM $table\n\nWHERE $timeFilter\n    and name like 'nginx.http.conn.%' and system_id = '$nginx_instance'\nGROUP BY name,t\n\nORDER BY name,t\n",
-          "rawQuery": "SELECT\n    (intDiv(toUInt32(timestamp), 1) * 1) * 1000 as t,\n    name,avg(value)\nFROM nms.metrics\n\nWHERE timestamp >= toDateTime(1641766753) AND timestamp <= toDateTime(1641768553)\n    and name like 'nginx.http.conn.%' and system_id = '9cbfd87a-4998-458b-9571-522fef84baee'\nGROUP BY name,t\n\nORDER BY name,t",
-          "refId": "A",
-          "round": "0s",
-          "skip_comments": true,
-          "table": "metrics",
-          "tableLoading": false
-        }
-      ],
-      "title": "HTTP Connections",
-      "type": "timeseries"
-    },
-    {
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "decimals": 0,
-          "mappings": [],
-          "max": 1,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
               },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "nginx.http.request.body_bytes_sent"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "#73BF69",
-                  "mode": "fixed"
-                }
-              },
-              {
-                "id": "unit",
-                "value": "decbytes"
-              }
-            ]
-          },
-          {
-            "__systemRef": "hideSeriesFrom",
-            "matcher": {
-              "id": "byNames",
-              "options": {
-                "mode": "exclude",
-                "names": [
-                  "nginx.http.request.body_bytes_sent"
-                ],
-                "prefix": "All except:",
-                "readOnly": true
-              }
-            },
-            "properties": [
-              {
-                "id": "custom.hideFrom",
-                "value": {
+              "custom": {
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
                   "legend": false,
                   "tooltip": false,
-                  "viz": true
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
                 }
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 1
-      },
-      "id": 15,
-      "options": {
-        "legend": {
-          "calcs": [
-            "lastNotNull",
-            "mean",
-            "max",
-            "min"
-          ],
-          "displayMode": "table",
-          "placement": "right"
-        },
-        "tooltip": {
-          "mode": "single"
-        }
-      },
-      "targets": [
-        {
-          "database": "nms",
-          "datasource": {
-            "type": "vertamedia-clickhouse-datasource",
-            "uid": "kXXNDeonk"
+              },
+              "decimals": 0,
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "none"
+            },
+            "overrides": []
           },
-          "dateColDataType": "",
-          "dateLoading": false,
-          "dateTimeColDataType": "timestamp",
-          "dateTimeType": "DATETIME",
-          "datetimeLoading": false,
-          "extrapolate": true,
-          "format": "time_series",
-          "formattedQuery": "SELECT $timeSeries as t, count() FROM $table WHERE $timeFilter GROUP BY t ORDER BY t",
-          "interval": "",
-          "intervalFactor": 1,
-          "query": "SELECT\n    $timeSeries as t,\n    name,avg(value)\nFROM $table\n\nWHERE $timeFilter\n    and name like 'nginx.http.request.%' and system_id = '$nginx_instance'\nGROUP BY name,t\n\nORDER BY name,t\n",
-          "rawQuery": "SELECT\n    (intDiv(toUInt32(timestamp), 300) * 300) * 1000 as t,\n    name,avg(value)\nFROM nms.metrics\n\nWHERE timestamp >= toDateTime(1641071316) AND timestamp <= toDateTime(1641676116)\n    and name like 'nginx.http.request.%' and system_id = '9cbfd87a-4998-458b-9571-522fef84baee'\nGROUP BY name,t\n\nORDER BY name,t",
-          "refId": "A",
-          "round": "0s",
-          "skip_comments": true,
-          "table": "metrics",
-          "tableLoading": false
-        }
-      ],
-      "title": "HTTP Requests",
-      "type": "timeseries"
-    },
-    {
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 1
           },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
+          "id": 13,
+          "options": {
+            "legend": {
+              "calcs": [
+                "lastNotNull",
+                "min",
+                "mean",
+                "max"
+              ],
+              "displayMode": "table",
+              "placement": "right"
             },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
+            "tooltip": {
+              "mode": "single"
             }
           },
-          "decimals": 1,
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
+          "targets": [
+            {
+              "database": "nms",
+              "datasource": {
+                "type": "vertamedia-clickhouse-datasource",
+                "uid": "kXXNDeonk"
+              },
+              "dateColDataType": "",
+              "dateLoading": false,
+              "dateTimeColDataType": "timestamp",
+              "dateTimeType": "DATETIME",
+              "datetimeLoading": false,
+              "extrapolate": true,
+              "format": "time_series",
+              "formattedQuery": "SELECT $timeSeries as t, count() FROM $table WHERE $timeFilter GROUP BY t ORDER BY t",
+              "interval": "",
+              "intervalFactor": 1,
+              "query": "SELECT\n    $timeSeries as t,\n    name,avg(value)\nFROM $table\n\nWHERE $timeFilter\n    and name like 'nginx.http.conn.%' and system_id = '$nginx_instance'\nGROUP BY name,t\n\nORDER BY name,t\n",
+              "rawQuery": "SELECT\n    (intDiv(toUInt32(timestamp), 1) * 1) * 1000 as t,\n    name,avg(value)\nFROM nms.metrics\n\nWHERE timestamp >= toDateTime(1641766753) AND timestamp <= toDateTime(1641768553)\n    and name like 'nginx.http.conn.%' and system_id = '9cbfd87a-4998-458b-9571-522fef84baee'\nGROUP BY name,t\n\nORDER BY name,t",
+              "refId": "A",
+              "round": "0s",
+              "skip_comments": true,
+              "table": "metrics",
+              "tableLoading": false
+            }
+          ],
+          "title": "HTTP Connections",
+          "type": "timeseries"
+        },
+        {
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "decimals": 0,
+              "mappings": [],
+              "max": 1,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "none"
+            },
+            "overrides": [
               {
-                "color": "green",
-                "value": null
+                "matcher": {
+                  "id": "byName",
+                  "options": "nginx.http.request.body_bytes_sent"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "#73BF69",
+                      "mode": "fixed"
+                    }
+                  },
+                  {
+                    "id": "unit",
+                    "value": "decbytes"
+                  }
+                ]
               },
               {
-                "color": "red",
-                "value": 80
+                "__systemRef": "hideSeriesFrom",
+                "matcher": {
+                  "id": "byNames",
+                  "options": {
+                    "mode": "exclude",
+                    "names": [
+                      "nginx.http.request.body_bytes_sent"
+                    ],
+                    "prefix": "All except:",
+                    "readOnly": true
+                  }
+                },
+                "properties": [
+                  {
+                    "id": "custom.hideFrom",
+                    "value": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": true
+                    }
+                  }
+                ]
               }
             ]
           },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 9
-      },
-      "id": 14,
-      "options": {
-        "legend": {
-          "calcs": [
-            "lastNotNull",
-            "min",
-            "mean",
-            "max"
-          ],
-          "displayMode": "table",
-          "placement": "right"
-        },
-        "tooltip": {
-          "mode": "single"
-        }
-      },
-      "targets": [
-        {
-          "database": "nms",
-          "datasource": {
-            "type": "vertamedia-clickhouse-datasource",
-            "uid": "kXXNDeonk"
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 1
           },
-          "dateColDataType": "",
-          "dateLoading": false,
-          "dateTimeColDataType": "timestamp",
-          "dateTimeType": "DATETIME",
-          "datetimeLoading": false,
-          "extrapolate": true,
-          "format": "time_series",
-          "formattedQuery": "SELECT $timeSeries as t, count() FROM $table WHERE $timeFilter GROUP BY t ORDER BY t",
-          "interval": "",
-          "intervalFactor": 1,
-          "query": "SELECT\n    $timeSeries as t,\n    name,avg(value)\nFROM $table\n\nWHERE $timeFilter\n    and name like 'plus.ssl.%' and system_id = '$nginx_instance'\nGROUP BY name,t\n\nORDER BY name,t\n",
-          "rawQuery": "SELECT\n    (intDiv(toUInt32(timestamp), 300) * 300) * 1000 as t,\n    name,avg(value)\nFROM nms.metrics\n\nWHERE timestamp >= toDateTime(1641070997) AND timestamp <= toDateTime(1641675797)\n    and name like 'plus.ssl.%' and system_id = '9cbfd87a-4998-458b-9571-522fef84baee'\nGROUP BY name,t\n\nORDER BY name,t",
-          "refId": "A",
-          "round": "0s",
-          "skip_comments": true,
-          "table": "metrics",
-          "tableLoading": false
+          "id": 15,
+          "options": {
+            "legend": {
+              "calcs": [
+                "lastNotNull",
+                "mean",
+                "max",
+                "min"
+              ],
+              "displayMode": "table",
+              "placement": "right"
+            },
+            "tooltip": {
+              "mode": "single"
+            }
+          },
+          "targets": [
+            {
+              "database": "nms",
+              "datasource": {
+                "type": "vertamedia-clickhouse-datasource",
+                "uid": "kXXNDeonk"
+              },
+              "dateColDataType": "",
+              "dateLoading": false,
+              "dateTimeColDataType": "timestamp",
+              "dateTimeType": "DATETIME",
+              "datetimeLoading": false,
+              "extrapolate": true,
+              "format": "time_series",
+              "formattedQuery": "SELECT $timeSeries as t, count() FROM $table WHERE $timeFilter GROUP BY t ORDER BY t",
+              "interval": "",
+              "intervalFactor": 1,
+              "query": "SELECT\n    $timeSeries as t,\n    name,avg(value)\nFROM $table\n\nWHERE $timeFilter\n    and name like 'nginx.http.request.%' and system_id = '$nginx_instance'\nGROUP BY name,t\n\nORDER BY name,t\n",
+              "rawQuery": "SELECT\n    (intDiv(toUInt32(timestamp), 300) * 300) * 1000 as t,\n    name,avg(value)\nFROM nms.metrics\n\nWHERE timestamp >= toDateTime(1641071316) AND timestamp <= toDateTime(1641676116)\n    and name like 'nginx.http.request.%' and system_id = '9cbfd87a-4998-458b-9571-522fef84baee'\nGROUP BY name,t\n\nORDER BY name,t",
+              "refId": "A",
+              "round": "0s",
+              "skip_comments": true,
+              "table": "metrics",
+              "tableLoading": false
+            }
+          ],
+          "title": "HTTP Requests",
+          "type": "timeseries"
+        },
+        {
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "decimals": 1,
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "none"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 9
+          },
+          "id": 14,
+          "options": {
+            "legend": {
+              "calcs": [
+                "lastNotNull",
+                "min",
+                "mean",
+                "max"
+              ],
+              "displayMode": "table",
+              "placement": "right"
+            },
+            "tooltip": {
+              "mode": "single"
+            }
+          },
+          "targets": [
+            {
+              "database": "nms",
+              "datasource": {
+                "type": "vertamedia-clickhouse-datasource",
+                "uid": "kXXNDeonk"
+              },
+              "dateColDataType": "",
+              "dateLoading": false,
+              "dateTimeColDataType": "timestamp",
+              "dateTimeType": "DATETIME",
+              "datetimeLoading": false,
+              "extrapolate": true,
+              "format": "time_series",
+              "formattedQuery": "SELECT $timeSeries as t, count() FROM $table WHERE $timeFilter GROUP BY t ORDER BY t",
+              "interval": "",
+              "intervalFactor": 1,
+              "query": "SELECT\n    $timeSeries as t,\n    name,avg(value)\nFROM $table\n\nWHERE $timeFilter\n    and name like 'plus.ssl.%' and system_id = '$nginx_instance'\nGROUP BY name,t\n\nORDER BY name,t\n",
+              "rawQuery": "SELECT\n    (intDiv(toUInt32(timestamp), 1) * 1) * 1000 as t,\n    name,avg(value)\nFROM nms.metrics\n\nWHERE timestamp >= toDateTime(1644359127) AND timestamp <= toDateTime(1644360927)\n    and name like 'plus.ssl.%' and system_id = '9cbfd87a-4998-458b-9571-522fef84baee'\nGROUP BY name,t\n\nORDER BY name,t",
+              "refId": "A",
+              "round": "0s",
+              "skip_comments": true,
+              "table": "metrics",
+              "tableLoading": false
+            }
+          ],
+          "title": "SSL",
+          "type": "timeseries"
+        },
+        {
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "decimals": 1,
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "none"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 9
+          },
+          "id": 16,
+          "options": {
+            "legend": {
+              "calcs": [
+                "lastNotNull",
+                "min",
+                "mean",
+                "max"
+              ],
+              "displayMode": "table",
+              "placement": "right"
+            },
+            "tooltip": {
+              "mode": "single"
+            }
+          },
+          "targets": [
+            {
+              "database": "nms",
+              "datasource": {
+                "type": "vertamedia-clickhouse-datasource",
+                "uid": "kXXNDeonk"
+              },
+              "dateColDataType": "",
+              "dateLoading": false,
+              "dateTimeColDataType": "timestamp",
+              "dateTimeType": "DATETIME",
+              "datetimeLoading": false,
+              "extrapolate": true,
+              "format": "time_series",
+              "formattedQuery": "SELECT $timeSeries as t, count() FROM $table WHERE $timeFilter GROUP BY t ORDER BY t",
+              "interval": "",
+              "intervalFactor": 1,
+              "query": "SELECT\n    $timeSeries as t,\n    name,avg(value)\nFROM $table\n\nWHERE $timeFilter\n    and name like 'plus.http.status.%' and system_id = '$nginx_instance'\nGROUP BY name,t\n\nORDER BY name,t\n",
+              "rawQuery": "SELECT\n    (intDiv(toUInt32(timestamp), 1) * 1) * 1000 as t,\n    name,avg(value)\nFROM nms.metrics\n\nWHERE timestamp >= toDateTime(1644359120) AND timestamp <= toDateTime(1644360920)\n    and name like 'plus.http.status.%' and system_id = '9cbfd87a-4998-458b-9571-522fef84baee'\nGROUP BY name,t\n\nORDER BY name,t",
+              "refId": "A",
+              "round": "0s",
+              "skip_comments": true,
+              "table": "metrics",
+              "tableLoading": false
+            }
+          ],
+          "title": "HTTP Status",
+          "type": "timeseries"
         }
       ],
-      "title": "NGINX Plus SSL",
-      "type": "timeseries"
+      "repeat": "nginx_instance",
+      "title": "NGINX HTTP & SSL",
+      "type": "row"
     },
     {
       "collapsed": false,
@@ -407,12 +513,11 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 17
+        "y": 1
       },
-      "id": 8,
+      "id": 22,
       "panels": [],
-      "repeat": "nginx_instance",
-      "title": "System",
+      "title": "NGINX HTTP Upstreams",
       "type": "row"
     },
     {
@@ -450,216 +555,7 @@
               "mode": "off"
             }
           },
-          "decimals": 1,
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 18
-      },
-      "id": 2,
-      "options": {
-        "legend": {
-          "calcs": [
-            "lastNotNull",
-            "min",
-            "mean",
-            "max"
-          ],
-          "displayMode": "table",
-          "placement": "right"
-        },
-        "tooltip": {
-          "mode": "single"
-        }
-      },
-      "targets": [
-        {
-          "database": "nms",
-          "datasource": {
-            "type": "vertamedia-clickhouse-datasource",
-            "uid": "kXXNDeonk"
-          },
-          "dateColDataType": "",
-          "dateLoading": false,
-          "dateTimeColDataType": "timestamp",
-          "dateTimeType": "DATETIME",
-          "datetimeLoading": false,
-          "extrapolate": true,
-          "format": "time_series",
-          "formattedQuery": "SELECT $timeSeries as t, count() FROM $table WHERE $timeFilter GROUP BY t ORDER BY t",
-          "interval": "",
-          "intervalFactor": 1,
-          "query": "SELECT\n    $timeSeries as t,\n    name,avg(value)\nFROM $table\n\nWHERE $timeFilter\n    and name like 'system.cpu.%' and system_id = '$nginx_instance'\nGROUP BY name,t\n\nORDER BY name,t\n",
-          "rawQuery": "SELECT\n    (intDiv(toUInt32(timestamp), 120) * 120) * 1000 as t,\n    name,avg(value)\nFROM nms.metrics\n\nWHERE timestamp >= toDateTime(1641387717) AND timestamp <= toDateTime(1641673358)\n    and name like 'system.cpu.%' and system_id = '9cbfd87a-4998-458b-9571-522fef84baee'\nGROUP BY name,t\n\nORDER BY name,t",
-          "refId": "A",
-          "round": "0s",
-          "skip_comments": true,
-          "table": "metrics",
-          "tableLoading": false
-        }
-      ],
-      "title": "CPU usage",
-      "type": "timeseries"
-    },
-    {
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "decimals": 1,
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "decbytes"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 18
-      },
-      "id": 6,
-      "options": {
-        "legend": {
-          "calcs": [
-            "lastNotNull",
-            "min",
-            "mean",
-            "max"
-          ],
-          "displayMode": "table",
-          "placement": "right"
-        },
-        "tooltip": {
-          "mode": "single"
-        }
-      },
-      "targets": [
-        {
-          "database": "nms",
-          "datasource": {
-            "type": "vertamedia-clickhouse-datasource",
-            "uid": "kXXNDeonk"
-          },
-          "dateColDataType": "",
-          "dateLoading": false,
-          "dateTimeColDataType": "timestamp",
-          "dateTimeType": "DATETIME",
-          "datetimeLoading": false,
-          "extrapolate": true,
-          "format": "time_series",
-          "formattedQuery": "SELECT $timeSeries as t, count() FROM $table WHERE $timeFilter GROUP BY t ORDER BY t",
-          "interval": "",
-          "intervalFactor": 1,
-          "query": "SELECT\n    $timeSeries as t,\n    name,avg(value)\nFROM $table\n\nWHERE $timeFilter\n    and name like 'system.mem.%' and system_id = '$nginx_instance'\nGROUP BY name,t\n\nORDER BY name,t\n",
-          "rawQuery": "SELECT\n    (intDiv(toUInt32(timestamp), 120) * 120) * 1000 as t,\n    name,avg(value)\nFROM nms.metrics\n\nWHERE timestamp >= toDateTime(1641387717) AND timestamp <= toDateTime(1641673358)\n    and name like 'system.mem.%' and system_id = '9cbfd87a-4998-458b-9571-522fef84baee'\nGROUP BY name,t\n\nORDER BY name,t",
-          "refId": "A",
-          "round": "0s",
-          "skip_comments": true,
-          "table": "metrics",
-          "tableLoading": false
-        }
-      ],
-      "title": "Memory usage",
-      "type": "timeseries"
-    },
-    {
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
+          "decimals": 0,
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -682,9 +578,9 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 26
+        "y": 2
       },
-      "id": 3,
+      "id": 17,
       "options": {
         "legend": {
           "calcs": [
@@ -717,8 +613,8 @@
           "formattedQuery": "SELECT $timeSeries as t, count() FROM $table WHERE $timeFilter GROUP BY t ORDER BY t",
           "interval": "",
           "intervalFactor": 1,
-          "query": "SELECT\n    $timeSeries as t,\n    name,avg(value)\nFROM $table\n\nWHERE $timeFilter\n    and name like 'system.io.%' and system_id = '$nginx_instance'\nGROUP BY name,t\n\nORDER BY name,t\n",
-          "rawQuery": "SELECT\n    (intDiv(toUInt32(timestamp), 300) * 300) * 1000 as t,\n    name,avg(value)\nFROM nms.metrics\n\nWHERE timestamp >= toDateTime(1641070850) AND timestamp <= toDateTime(1641675650)\n    and name like 'system.io.%' and system_id = '9cbfd87a-4998-458b-9571-522fef84baee'\nGROUP BY name,t\n\nORDER BY name,t",
+          "query": "SELECT\n    $timeSeries as t,\n    name,avg(value)\nFROM $table\n\nWHERE $timeFilter\n    and name like 'plus.http.upstream.health.%' and system_id = '$nginx_instance'\nGROUP BY name,t\n\nORDER BY name,t\n",
+          "rawQuery": "SELECT\n    (intDiv(toUInt32(timestamp), 1) * 1) * 1000 as t,\n    name,avg(value)\nFROM nms.metrics\n\nWHERE timestamp >= toDateTime(1644359836) AND timestamp <= toDateTime(1644361636)\n    and name like 'plus.http.upstream.health.%' and system_id = '9cbfd87a-4998-458b-9571-522fef84baee'\nGROUP BY name,t\n\nORDER BY name,t",
           "refId": "A",
           "round": "0s",
           "skip_comments": true,
@@ -726,7 +622,112 @@
           "tableLoading": false
         }
       ],
-      "title": "System I/O",
+      "title": "Upstream health",
+      "type": "timeseries"
+    },
+    {
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "decimals": 0,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 2
+      },
+      "id": 19,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "min",
+            "mean",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "right"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "database": "nms",
+          "datasource": {
+            "type": "vertamedia-clickhouse-datasource",
+            "uid": "kXXNDeonk"
+          },
+          "dateColDataType": "",
+          "dateLoading": false,
+          "dateTimeColDataType": "timestamp",
+          "dateTimeType": "DATETIME",
+          "datetimeLoading": false,
+          "extrapolate": true,
+          "format": "time_series",
+          "formattedQuery": "SELECT $timeSeries as t, count() FROM $table WHERE $timeFilter GROUP BY t ORDER BY t",
+          "interval": "",
+          "intervalFactor": 1,
+          "query": "SELECT\n    $timeSeries as t,\n    name,avg(value)\nFROM $table\n\nWHERE $timeFilter\n    and name like 'plus.http.upstream.peers.%' and system_id = '$nginx_instance'\nGROUP BY name,t\n\nORDER BY name,t\n",
+          "rawQuery": "SELECT\n    (intDiv(toUInt32(timestamp), 1) * 1) * 1000 as t,\n    name,avg(value)\nFROM nms.metrics\n\nWHERE timestamp >= toDateTime(1644359817) AND timestamp <= toDateTime(1644361617)\n    and name like 'plus.http.upstream.peers.%' and system_id = '9cbfd87a-4998-458b-9571-522fef84baee'\nGROUP BY name,t\n\nORDER BY name,t",
+          "refId": "A",
+          "round": "0s",
+          "skip_comments": true,
+          "table": "metrics",
+          "tableLoading": false
+        }
+      ],
+      "title": "HTTP upstream peers",
       "type": "timeseries"
     },
     {
@@ -786,10 +787,10 @@
       "gridPos": {
         "h": 8,
         "w": 12,
-        "x": 12,
-        "y": 26
+        "x": 0,
+        "y": 10
       },
-      "id": 5,
+      "id": 18,
       "options": {
         "legend": {
           "calcs": [
@@ -822,8 +823,8 @@
           "formattedQuery": "SELECT $timeSeries as t, count() FROM $table WHERE $timeFilter GROUP BY t ORDER BY t",
           "interval": "",
           "intervalFactor": 1,
-          "query": "SELECT\n    $timeSeries as t,\n    name,avg(value)\nFROM $table\n\nWHERE $timeFilter\n    and name like 'system.load.%' and system_id = '$nginx_instance'\nGROUP BY name,t\n\nORDER BY name,t\n",
-          "rawQuery": "SELECT\n    (intDiv(toUInt32(timestamp), 120) * 120) * 1000 as t,\n    name,avg(value)\nFROM nms.metrics\n\nWHERE timestamp >= toDateTime(1641387717) AND timestamp <= toDateTime(1641673358)\n    and name like 'system.load.%' and system_id = '17ab67bb-fcbe-4cb0-adef-bc811033b6e8'\nGROUP BY name,t\n\nORDER BY name,t",
+          "query": "SELECT\n    $timeSeries as t,\n    name,avg(value)\nFROM $table\n\nWHERE $timeFilter\n    and name like 'plus.http.upstream.status.%' and system_id = '$nginx_instance'\nGROUP BY name,t\n\nORDER BY name,t\n",
+          "rawQuery": "SELECT\n    (intDiv(toUInt32(timestamp), 1) * 1) * 1000 as t,\n    name,avg(value)\nFROM nms.metrics\n\nWHERE timestamp >= toDateTime(1644359250) AND timestamp <= toDateTime(1644361050)\n    and name like 'plus.http.upstream.status.%' and system_id = '9cbfd87a-4998-458b-9571-522fef84baee'\nGROUP BY name,t\n\nORDER BY name,t",
           "refId": "A",
           "round": "0s",
           "skip_comments": true,
@@ -831,7 +832,7 @@
           "tableLoading": false
         }
       ],
-      "title": "System Load",
+      "title": "HTTP upstream status",
       "type": "timeseries"
     },
     {
@@ -869,7 +870,7 @@
               "mode": "off"
             }
           },
-          "decimals": 0,
+          "decimals": 1,
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -884,133 +885,29 @@
               }
             ]
           },
-          "unit": "decbytes"
+          "unit": "none"
         },
         "overrides": [
           {
             "matcher": {
               "id": "byName",
-              "options": "system.disk.in_use"
+              "options": "plus.http.upstream.response.time"
             },
             "properties": [
               {
-                "id": "unit",
-                "value": "percent"
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 34
-      },
-      "id": 4,
-      "options": {
-        "legend": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "displayMode": "table",
-          "placement": "right"
-        },
-        "tooltip": {
-          "mode": "single"
-        }
-      },
-      "targets": [
-        {
-          "database": "nms",
-          "datasource": {
-            "type": "vertamedia-clickhouse-datasource",
-            "uid": "kXXNDeonk"
-          },
-          "dateColDataType": "",
-          "dateLoading": false,
-          "dateTimeColDataType": "timestamp",
-          "dateTimeType": "DATETIME",
-          "datetimeLoading": false,
-          "extrapolate": true,
-          "format": "time_series",
-          "formattedQuery": "SELECT $timeSeries as t, count() FROM $table WHERE $timeFilter GROUP BY t ORDER BY t",
-          "interval": "",
-          "intervalFactor": 1,
-          "query": "SELECT\n    $timeSeries as t,\n    name,avg(value)\nFROM $table\n\nWHERE $timeFilter\n    and name like 'system.disk.%' and system_id = '$nginx_instance'\nGROUP BY name,t\n\nORDER BY name,t\n",
-          "rawQuery": "SELECT\n    (intDiv(toUInt32(timestamp), 120) * 120) * 1000 as t,\n    name,avg(value)\nFROM nms.metrics\n\nWHERE timestamp >= toDateTime(1641387717) AND timestamp <= toDateTime(1641673358)\n    and name like 'system.disk.%' and system_id = '17ab67bb-fcbe-4cb0-adef-bc811033b6e8'\nGROUP BY name,t\n\nORDER BY name,t",
-          "refId": "A",
-          "round": "0s",
-          "skip_comments": true,
-          "table": "metrics",
-          "tableLoading": false
-        }
-      ],
-      "title": "Disk",
-      "type": "timeseries"
-    },
-    {
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "decimals": 0,
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
+                "id": "color",
+                "value": {
+                  "fixedColor": "#8AB8FF",
+                  "mode": "fixed"
+                }
               },
               {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "decbytes"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "system.disk.in_use"
-            },
-            "properties": [
+                "id": "custom.axisPlacement",
+                "value": "right"
+              },
               {
                 "id": "unit",
-                "value": "percent"
+                "value": "ms"
               }
             ]
           }
@@ -1020,13 +917,16 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 34
+        "y": 10
       },
-      "id": 11,
+      "id": 20,
       "options": {
         "legend": {
           "calcs": [
-            "lastNotNull"
+            "lastNotNull",
+            "min",
+            "mean",
+            "max"
           ],
           "displayMode": "table",
           "placement": "right"
@@ -1052,8 +952,8 @@
           "formattedQuery": "SELECT $timeSeries as t, count() FROM $table WHERE $timeFilter GROUP BY t ORDER BY t",
           "interval": "",
           "intervalFactor": 1,
-          "query": "SELECT\n    $timeSeries as t,\n    name,avg(value)\nFROM $table\n\nWHERE $timeFilter\n    and name like 'system.net.%' and system_id = '$nginx_instance'\nGROUP BY name,t\n\nORDER BY name,t\n",
-          "rawQuery": "SELECT\n    (intDiv(toUInt32(timestamp), 300) * 300) * 1000 as t,\n    name,avg(value)\nFROM nms.metrics\n\nWHERE timestamp >= toDateTime(1641070330) AND timestamp <= toDateTime(1641675130)\n    and name like 'system.net.%' and system_id = '17ab67bb-fcbe-4cb0-adef-bc811033b6e8'\nGROUP BY name,t\n\nORDER BY name,t",
+          "query": "SELECT\n    $timeSeries as t,\n    name,avg(value)\nFROM $table\n\nWHERE $timeFilter\n    and (name like 'plus.http.upstream.request.%' or name like 'plus.http.upstream.response.%') and system_id = '$nginx_instance'\nGROUP BY name,t\n\nORDER BY name,t\n",
+          "rawQuery": "SELECT\n    (intDiv(toUInt32(timestamp), 1) * 1) * 1000 as t,\n    name,avg(value)\nFROM nms.metrics\n\nWHERE timestamp >= toDateTime(1644359393) AND timestamp <= toDateTime(1644361193)\n    and (name like 'plus.http.upstream.request.%' or name like 'plus.http.upstream.response.%') and system_id = '9cbfd87a-4998-458b-9571-522fef84baee'\nGROUP BY name,t\n\nORDER BY name,t",
           "refId": "A",
           "round": "0s",
           "skip_comments": true,
@@ -1061,8 +961,793 @@
           "tableLoading": false
         }
       ],
-      "title": "Network",
+      "title": "HTTP upstream peers",
       "type": "timeseries"
+    },
+    {
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "decimals": 1,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "plus.http.upstream.response.time"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#8AB8FF",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 18
+      },
+      "id": 23,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "min",
+            "mean",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "right"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "database": "nms",
+          "datasource": {
+            "type": "vertamedia-clickhouse-datasource",
+            "uid": "kXXNDeonk"
+          },
+          "dateColDataType": "",
+          "dateLoading": false,
+          "dateTimeColDataType": "timestamp",
+          "dateTimeType": "DATETIME",
+          "datetimeLoading": false,
+          "extrapolate": true,
+          "format": "time_series",
+          "formattedQuery": "SELECT $timeSeries as t, count() FROM $table WHERE $timeFilter GROUP BY t ORDER BY t",
+          "interval": "",
+          "intervalFactor": 1,
+          "query": "SELECT\n    $timeSeries as t,\n    name,avg(value)\nFROM $table\n\nWHERE $timeFilter\n    and name like 'plus.http.upstream.bytes_%' and system_id = '$nginx_instance'\nGROUP BY name,t\n\nORDER BY name,t\n",
+          "rawQuery": "SELECT\n    (intDiv(toUInt32(timestamp), 1) * 1) * 1000 as t,\n    name,avg(value)\nFROM nms.metrics\n\nWHERE timestamp >= toDateTime(1644359919) AND timestamp <= toDateTime(1644361719)\n    and name like 'plus.http.upstream.bytes_%' and system_id = '9cbfd87a-4998-458b-9571-522fef84baee'\nGROUP BY name,t\n\nORDER BY name,t",
+          "refId": "A",
+          "round": "0s",
+          "skip_comments": true,
+          "table": "metrics",
+          "tableLoading": false
+        }
+      ],
+      "title": "HTTP upstream bytes",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 26
+      },
+      "id": 8,
+      "panels": [
+        {
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "decimals": 1,
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 3
+          },
+          "id": 2,
+          "options": {
+            "legend": {
+              "calcs": [
+                "lastNotNull",
+                "min",
+                "mean",
+                "max"
+              ],
+              "displayMode": "table",
+              "placement": "right"
+            },
+            "tooltip": {
+              "mode": "single"
+            }
+          },
+          "targets": [
+            {
+              "database": "nms",
+              "datasource": {
+                "type": "vertamedia-clickhouse-datasource",
+                "uid": "kXXNDeonk"
+              },
+              "dateColDataType": "",
+              "dateLoading": false,
+              "dateTimeColDataType": "timestamp",
+              "dateTimeType": "DATETIME",
+              "datetimeLoading": false,
+              "extrapolate": true,
+              "format": "time_series",
+              "formattedQuery": "SELECT $timeSeries as t, count() FROM $table WHERE $timeFilter GROUP BY t ORDER BY t",
+              "interval": "",
+              "intervalFactor": 1,
+              "query": "SELECT\n    $timeSeries as t,\n    name,avg(value)\nFROM $table\n\nWHERE $timeFilter\n    and name like 'system.cpu.%' and system_id = '$nginx_instance'\nGROUP BY name,t\n\nORDER BY name,t\n",
+              "rawQuery": "SELECT\n    (intDiv(toUInt32(timestamp), 120) * 120) * 1000 as t,\n    name,avg(value)\nFROM nms.metrics\n\nWHERE timestamp >= toDateTime(1641387717) AND timestamp <= toDateTime(1641673358)\n    and name like 'system.cpu.%' and system_id = '9cbfd87a-4998-458b-9571-522fef84baee'\nGROUP BY name,t\n\nORDER BY name,t",
+              "refId": "A",
+              "round": "0s",
+              "skip_comments": true,
+              "table": "metrics",
+              "tableLoading": false
+            }
+          ],
+          "title": "CPU usage",
+          "type": "timeseries"
+        },
+        {
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "decimals": 1,
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "decbytes"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 3
+          },
+          "id": 6,
+          "options": {
+            "legend": {
+              "calcs": [
+                "lastNotNull",
+                "min",
+                "mean",
+                "max"
+              ],
+              "displayMode": "table",
+              "placement": "right"
+            },
+            "tooltip": {
+              "mode": "single"
+            }
+          },
+          "targets": [
+            {
+              "database": "nms",
+              "datasource": {
+                "type": "vertamedia-clickhouse-datasource",
+                "uid": "kXXNDeonk"
+              },
+              "dateColDataType": "",
+              "dateLoading": false,
+              "dateTimeColDataType": "timestamp",
+              "dateTimeType": "DATETIME",
+              "datetimeLoading": false,
+              "extrapolate": true,
+              "format": "time_series",
+              "formattedQuery": "SELECT $timeSeries as t, count() FROM $table WHERE $timeFilter GROUP BY t ORDER BY t",
+              "interval": "",
+              "intervalFactor": 1,
+              "query": "SELECT\n    $timeSeries as t,\n    name,avg(value)\nFROM $table\n\nWHERE $timeFilter\n    and name like 'system.mem.%' and system_id = '$nginx_instance'\nGROUP BY name,t\n\nORDER BY name,t\n",
+              "rawQuery": "SELECT\n    (intDiv(toUInt32(timestamp), 120) * 120) * 1000 as t,\n    name,avg(value)\nFROM nms.metrics\n\nWHERE timestamp >= toDateTime(1641387717) AND timestamp <= toDateTime(1641673358)\n    and name like 'system.mem.%' and system_id = '9cbfd87a-4998-458b-9571-522fef84baee'\nGROUP BY name,t\n\nORDER BY name,t",
+              "refId": "A",
+              "round": "0s",
+              "skip_comments": true,
+              "table": "metrics",
+              "tableLoading": false
+            }
+          ],
+          "title": "Memory usage",
+          "type": "timeseries"
+        },
+        {
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "none"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 11
+          },
+          "id": 3,
+          "options": {
+            "legend": {
+              "calcs": [
+                "lastNotNull",
+                "min",
+                "mean",
+                "max"
+              ],
+              "displayMode": "table",
+              "placement": "right"
+            },
+            "tooltip": {
+              "mode": "single"
+            }
+          },
+          "targets": [
+            {
+              "database": "nms",
+              "datasource": {
+                "type": "vertamedia-clickhouse-datasource",
+                "uid": "kXXNDeonk"
+              },
+              "dateColDataType": "",
+              "dateLoading": false,
+              "dateTimeColDataType": "timestamp",
+              "dateTimeType": "DATETIME",
+              "datetimeLoading": false,
+              "extrapolate": true,
+              "format": "time_series",
+              "formattedQuery": "SELECT $timeSeries as t, count() FROM $table WHERE $timeFilter GROUP BY t ORDER BY t",
+              "interval": "",
+              "intervalFactor": 1,
+              "query": "SELECT\n    $timeSeries as t,\n    name,avg(value)\nFROM $table\n\nWHERE $timeFilter\n    and name like 'system.io.%' and system_id = '$nginx_instance'\nGROUP BY name,t\n\nORDER BY name,t\n",
+              "rawQuery": "SELECT\n    (intDiv(toUInt32(timestamp), 300) * 300) * 1000 as t,\n    name,avg(value)\nFROM nms.metrics\n\nWHERE timestamp >= toDateTime(1641070850) AND timestamp <= toDateTime(1641675650)\n    and name like 'system.io.%' and system_id = '9cbfd87a-4998-458b-9571-522fef84baee'\nGROUP BY name,t\n\nORDER BY name,t",
+              "refId": "A",
+              "round": "0s",
+              "skip_comments": true,
+              "table": "metrics",
+              "tableLoading": false
+            }
+          ],
+          "title": "System I/O",
+          "type": "timeseries"
+        },
+        {
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "decimals": 1,
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "none"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 11
+          },
+          "id": 5,
+          "options": {
+            "legend": {
+              "calcs": [
+                "lastNotNull",
+                "min",
+                "mean",
+                "max"
+              ],
+              "displayMode": "table",
+              "placement": "right"
+            },
+            "tooltip": {
+              "mode": "single"
+            }
+          },
+          "targets": [
+            {
+              "database": "nms",
+              "datasource": {
+                "type": "vertamedia-clickhouse-datasource",
+                "uid": "kXXNDeonk"
+              },
+              "dateColDataType": "",
+              "dateLoading": false,
+              "dateTimeColDataType": "timestamp",
+              "dateTimeType": "DATETIME",
+              "datetimeLoading": false,
+              "extrapolate": true,
+              "format": "time_series",
+              "formattedQuery": "SELECT $timeSeries as t, count() FROM $table WHERE $timeFilter GROUP BY t ORDER BY t",
+              "interval": "",
+              "intervalFactor": 1,
+              "query": "SELECT\n    $timeSeries as t,\n    name,avg(value)\nFROM $table\n\nWHERE $timeFilter\n    and name like 'system.load.%' and system_id = '$nginx_instance'\nGROUP BY name,t\n\nORDER BY name,t\n",
+              "rawQuery": "SELECT\n    (intDiv(toUInt32(timestamp), 120) * 120) * 1000 as t,\n    name,avg(value)\nFROM nms.metrics\n\nWHERE timestamp >= toDateTime(1641387717) AND timestamp <= toDateTime(1641673358)\n    and name like 'system.load.%' and system_id = '17ab67bb-fcbe-4cb0-adef-bc811033b6e8'\nGROUP BY name,t\n\nORDER BY name,t",
+              "refId": "A",
+              "round": "0s",
+              "skip_comments": true,
+              "table": "metrics",
+              "tableLoading": false
+            }
+          ],
+          "title": "System Load",
+          "type": "timeseries"
+        },
+        {
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "decimals": 0,
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "decbytes"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "system.disk.in_use"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "percent"
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 19
+          },
+          "id": 4,
+          "options": {
+            "legend": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "displayMode": "table",
+              "placement": "right"
+            },
+            "tooltip": {
+              "mode": "single"
+            }
+          },
+          "targets": [
+            {
+              "database": "nms",
+              "datasource": {
+                "type": "vertamedia-clickhouse-datasource",
+                "uid": "kXXNDeonk"
+              },
+              "dateColDataType": "",
+              "dateLoading": false,
+              "dateTimeColDataType": "timestamp",
+              "dateTimeType": "DATETIME",
+              "datetimeLoading": false,
+              "extrapolate": true,
+              "format": "time_series",
+              "formattedQuery": "SELECT $timeSeries as t, count() FROM $table WHERE $timeFilter GROUP BY t ORDER BY t",
+              "interval": "",
+              "intervalFactor": 1,
+              "query": "SELECT\n    $timeSeries as t,\n    name,avg(value)\nFROM $table\n\nWHERE $timeFilter\n    and name like 'system.disk.%' and system_id = '$nginx_instance'\nGROUP BY name,t\n\nORDER BY name,t\n",
+              "rawQuery": "SELECT\n    (intDiv(toUInt32(timestamp), 120) * 120) * 1000 as t,\n    name,avg(value)\nFROM nms.metrics\n\nWHERE timestamp >= toDateTime(1641387717) AND timestamp <= toDateTime(1641673358)\n    and name like 'system.disk.%' and system_id = '17ab67bb-fcbe-4cb0-adef-bc811033b6e8'\nGROUP BY name,t\n\nORDER BY name,t",
+              "refId": "A",
+              "round": "0s",
+              "skip_comments": true,
+              "table": "metrics",
+              "tableLoading": false
+            }
+          ],
+          "title": "Disk",
+          "type": "timeseries"
+        },
+        {
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "decimals": 0,
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "decbytes"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "system.disk.in_use"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "percent"
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 19
+          },
+          "id": 11,
+          "options": {
+            "legend": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "displayMode": "table",
+              "placement": "right"
+            },
+            "tooltip": {
+              "mode": "single"
+            }
+          },
+          "targets": [
+            {
+              "database": "nms",
+              "datasource": {
+                "type": "vertamedia-clickhouse-datasource",
+                "uid": "kXXNDeonk"
+              },
+              "dateColDataType": "",
+              "dateLoading": false,
+              "dateTimeColDataType": "timestamp",
+              "dateTimeType": "DATETIME",
+              "datetimeLoading": false,
+              "extrapolate": true,
+              "format": "time_series",
+              "formattedQuery": "SELECT $timeSeries as t, count() FROM $table WHERE $timeFilter GROUP BY t ORDER BY t",
+              "interval": "",
+              "intervalFactor": 1,
+              "query": "SELECT\n    $timeSeries as t,\n    name,avg(value)\nFROM $table\n\nWHERE $timeFilter\n    and name like 'system.net.%' and system_id = '$nginx_instance'\nGROUP BY name,t\n\nORDER BY name,t\n",
+              "rawQuery": "SELECT\n    (intDiv(toUInt32(timestamp), 300) * 300) * 1000 as t,\n    name,avg(value)\nFROM nms.metrics\n\nWHERE timestamp >= toDateTime(1641070330) AND timestamp <= toDateTime(1641675130)\n    and name like 'system.net.%' and system_id = '17ab67bb-fcbe-4cb0-adef-bc811033b6e8'\nGROUP BY name,t\n\nORDER BY name,t",
+              "refId": "A",
+              "round": "0s",
+              "skip_comments": true,
+              "table": "metrics",
+              "tableLoading": false
+            }
+          ],
+          "title": "Network",
+          "type": "timeseries"
+        }
+      ],
+      "repeat": "nginx_instance",
+      "title": "System",
+      "type": "row"
     }
   ],
   "refresh": false,
@@ -1127,6 +1812,6 @@
   "timezone": "browser",
   "title": "NGINX Telemetry",
   "uid": "yFZSpgJ7z",
-  "version": 2,
+  "version": 11,
   "weekStart": ""
 }
