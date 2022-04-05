@@ -94,11 +94,16 @@ env:
 ./scripts/nimDockerStart.sh stop
 ```
 
-8. After starting NGINX Instance Manager 2 it will be accessible at:
+8. After starting NGINX Instance Manager it will be accessible from outside the cluster at:
 
 NGINX Instance Manager GUI: `https://nim2.f5.ff.lan`
-
 NGINX Instance Manager gRPC port: `nim2.f5.ff.lan:30443`
+
+and from inside the cluster at:
+
+NGINX Instance Manager GUI: `https://nginx-nim2.nginx-nim2`
+NGINX Instance Manager gRPC port: `nginx-nim2.nginx-nim2:443`
+
 
 F5 Telemetry Tracker REST API (if enabled at build time - see the documentation at `https://github.com/fabriziofiorucci/F5-Telemetry-Tracker`):
 - `https://nim2.f5.ff.lan/f5tt/instances`
@@ -117,7 +122,7 @@ grafana-6f58d455c7-8lk64      1/1     Running   0          5m8s   10.244.2.80   
 nginx-nim2-679987c54d-7rl6b   1/1     Running   0          5m8s   10.244.1.64   f5-node1   <none>           <none>
 ```
 
-9. After installing the nginx-agent on NGINX Instances to be managed with NGINX Instance Manager 2, update the file `/etc/nginx-agent/nginx-agent.conf` and modify the line:
+9. For NGINX Instances running on VM/bare metal only: after installing the nginx-agent on NGINX Instances to be managed with NGINX Instance Manager 2, update the file `/etc/nginx-agent/nginx-agent.conf` and modify the line:
 
 ```
 grpcPort: 443
@@ -147,22 +152,7 @@ This repo has been tested with NIM 2.1.0
 ## Docker image build
 
 ```
-$ ./scripts/buildNIM.sh nim-files/nms-instance-manager_2.1.0-466409269~focal_amd64.deb registry.ff.lan:31005/nim2-docker:1.0 true
-==> Building NIM docker image
-Sending build context to Docker daemon  54.31MB
-Step 1/39 : FROM ubuntu:20.04
- ---> ba6acccedd29
-Step 2/39 : ARG NIM_DEBFILE
- ---> Running in db29f245b5a1
-Removing intermediate container db29f245b5a1
- ---> e1bf097beff2
-[...]
- ---> 22ecf8466795
-Successfully built 22ecf8466795
-Successfully tagged registry.ff.lan:31005/nim2-docker:1.0
-The push refers to repository [registry.ff.lan:31005/nim2-docker]
-[...]
-1.6: digest: sha256:74d81dfcfd63929d04b1243d345d4e6f3d66b772805e74204f0e03bca885b218 size: 7008
+$ ./scripts/buildNIM.sh nim-files/nms-instance-manager_2.1.0-508672347~focal_amd64.deb registry.ff.lan:31005/nim2-docker:2.1.0 true
 ```
 
 ## Starting NGINX Instance Manager
@@ -188,10 +178,10 @@ grafana-6f58d455c7-8lk64      1/1     Running   0          5m8s   10.244.2.80   
 nginx-nim2-679987c54d-7rl6b   1/1     Running   0          5m8s   10.244.1.64   f5-node1   <none>           <none>
 ```
 
-NGINX Instance Manager GUI is now reachable at:
+NGINX Instance Manager GUI is now reachable from outside the cluster at:
 - Web GUI: `https://nim2.f5.ff.lan`
 - gRPC: `nim2.f5.ff.lan:30443`
-- F5 Telemetry Tracker: `https://nim2.f5.ff.lan/f5tt/instances` and `https://nim2.f5.ff.lan/f5tt/metrics` and push mode
+- F5 Telemetry Tracker: see [usage](https://github.com/fabriziofiorucci/F5-Telemetry-Tracker/blob/production/USAGE.md)
 
 ## Stopping NGINX Instance Manager
 

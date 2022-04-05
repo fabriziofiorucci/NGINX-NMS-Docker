@@ -10,6 +10,8 @@ case $1 in
 		./cert-install.sh install
 		cd ..
 
+		kubectl create configmap clickhouse-conf -n $NAMESPACE --from-file=configmaps/config.xml
+		kubectl create configmap clickhouse-users -n $NAMESPACE --from-file=configmaps/users.xml
 		kubectl apply -n $NAMESPACE -f .
 		popd
 	;;

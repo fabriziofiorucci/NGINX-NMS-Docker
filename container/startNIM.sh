@@ -12,7 +12,7 @@ fi
 
 /etc/nms/scripts/basic_passwords.sh $NIM_USERNAME $NIM_PASSWORD
 
-# Clickhouse configuration
+# Clickhouse configuration - dedicated pod
 echo -e "
 
 # Clickhouse config
@@ -36,9 +36,11 @@ clickhouse_password = $NIM_CLICKHOUSE_PASSWORD
 /bin/bash -c '`which chmod` 0600 /etc/nms/certs/services/core/*'
 /usr/bin/nms-core &
 
-# Makes sure that Clickhouse is up and running
-RETCODE=-1
+# Makes sure that Clickhouse is up and running - dedicated pod
 
+#/etc/init.d/clickhouse-server start
+
+RETCODE=-1
 while [ ! $RETCODE = 0 ]
 do
         echo "show processlist" | clickhouse-client -h $NIM_CLICKHOUSE_ADDRESS --port $NIM_CLICKHOUSE_PORT -u $NIM_CLICKHOUSE_USERNAME --password $NIM_CLICKHOUSE_PASSWORD >/dev/null 2>/dev/null
