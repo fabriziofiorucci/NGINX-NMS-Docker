@@ -7,7 +7,7 @@ RUN apt-get update && \
 	DEBIAN_FRONTEND=noninteractive apt-get install -y -q build-essential git nano curl jq wget gawk lsb-release rsyslog systemd && \
 	mkdir -p deployment/setup
 
-# NGINX Instance Manager 2.0
+# NGINX Instance Manager 2.1.0
 COPY $NIM_DEBFILE /deployment/setup/nim.deb
 COPY ./container/startNIM.sh /deployment/
 
@@ -15,11 +15,6 @@ WORKDIR /deployment/setup
 
 RUN chmod +x /deployment/startNIM.sh && \
 	wget https://docs.nginx.com/nginx-instance-manager/scripts/fetch-external-dependencies.sh -qO /deployment/setup/fetch-external-dependencies.sh
-
-### Patch for bug in 2.1.0 RC
-RUN cat /deployment/setup/fetch-external-dependencies.sh | sed "s/repo.clickhouse.tech/repo.clickhouse.com/g" > /deployment/setup/fetch-external-dependencies.sh.patched && \
-	mv /deployment/setup/fetch-external-dependencies.sh.patched /deployment/setup/fetch-external-dependencies.sh
-###
 
 RUN bash /deployment/setup/fetch-external-dependencies.sh ubuntu20.04 && \
 	tar -zxvf nms-dependencies-ubuntu20.04.tar.gz && \
@@ -36,7 +31,7 @@ RUN apt-get -y install /deployment/setup/nim.deb && \
 # Optional F5 Telemetry Tracker
 WORKDIR /deployment
 RUN if [ "$BUILD_WITH_COUNTER" = "true" ] ; then apt-get install -y python3-pip python3-dev python3-simplejson && \
-	pip3 install fastapi uvicorn requests pandas xlsxwriter jinja2 && \
+	pip3 install fastapi uvicorn requests pandas xlsxwriter jinja2 json2html clickhouse-driver && \
 	touch /deployment/counter.enabled && \
 	git clone https://github.com/fabriziofiorucci/F5-Telemetry-Tracker && \
 	cp F5-Telemetry-Tracker/f5tt/app.py . && \
@@ -45,6 +40,7 @@ RUN if [ "$BUILD_WITH_COUNTER" = "true" ] ; then apt-get install -y python3-pip 
 	cp F5-Telemetry-Tracker/f5tt/nms.py . && \
 	cp F5-Telemetry-Tracker/f5tt/nc.py . && \
 	cp F5-Telemetry-Tracker/f5tt/cveDB.py . && \
+	cp F5-Telemetry-Tracker/f5tt/f5ttCH.py . && \
 	rm -rf F5-Telemetry-Tracker; fi
 	
 WORKDIR /deployment
