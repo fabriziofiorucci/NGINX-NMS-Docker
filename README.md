@@ -1,5 +1,7 @@
 # NGINX Instance Manager 2 - Docker image
 
+This repository is archived. To run NGINX Instance Manager 2 as a container please refer to the official installation docs at https://docs.nginx.com/nginx-instance-manager/
+
 ## Description
 
 This repo creates a docker image for NGINX Instance Manager >= 2.1 (https://docs.nginx.com/nginx-instance-manager/) to run it on Kubernetes/Openshift.
