@@ -70,6 +70,10 @@ clickhouse_password = $NIM_CLICKHOUSE_PASSWORD
 /bin/bash -c '`which chown` -R nms:nms /var/run/nms/'
 /usr/bin/nms-ingestion &
 
+# Start API Connectivity Manager
+sleep 5
+/usr/bin/nms-acm server &
+
 sleep 5
 
 chmod 666 /var/run/nms/*.sock

@@ -2,33 +2,42 @@
 
 ## Description
 
-This repo creates a docker image for NGINX Instance Manager >= 2.4.0 (https://docs.nginx.com/nginx-instance-manager/) to run it on Kubernetes/Openshift.
+This repo creates a docker image for NGINX Instance Manager 2.4.0+ (https://docs.nginx.com/nginx-instance-manager/) to run it on Kubernetes/Openshift.
 The image can optionally be built with Second Sight support (see https://github.com/F5Networks/SecondSight)
 
 ## Prerequisites
 
 - Kubernetes/Openshift cluster with dynamic storage provisioner enabled: see the [example](/contrib/pvc-provisioner)
 - NGINX Ingress Controller with `VirtualServer` CRD support (see https://docs.nginx.com/nginx-ingress-controller/configuration/virtualserver-and-virtualserverroute-resources/)
-- Access to F5/NGINX downloads to fetch NGINX Instance Manager >= 2.4.0 installation .deb file
+- Access to F5/NGINX downloads to fetch NGINX Instance Manager 2.4.0+ installation .deb file and API Connectivity Manager 1.0+ installation .deb file
 - Linux host running Docker to build the image
 
 ## How to build
 
 1. Clone this repo
-2. Download NGINX Instance Manager >= 2.4.0 .deb installation file for Ubuntu 22.04 "focal_amd64" (ie. `nms-instance-manager_2.4.0-614112268_jammy_amd64.deb`) and copy it into `nim-files/`
+2. Download NGINX Instance Manager 2.4.0+ .deb installation file for Ubuntu 22.04 "focal_amd64" (ie. `nms-instance-manager_2.4.0-614112268_jammy_amd64.deb`) and copy it into `nim-files/`
+3. Optional: if using API Connectivity Manager 1.0+ .deb installation file for Ubuntu 22.04 "jammy_amdt4" (ie. `nms-api-connectivity-manager_1.0.0.587907371_jammy_amd64.deb`) and copy it into `nim-files/`
 3. Build NGINX Instance Manager Docker image using:
 
 ```
-./scripts/buildNIM.sh [NIM_DEBFILE] [target Docker image name] [Second Sight enabled (true|false)]
-
-for instance:
-
-./scripts/buildNIM.sh ./nim-files/nms-instance-manager_2.4.0-614112268_jammy_amd64.deb your.registry.tld/nginx-nim2:tag true
+./scripts/buildNIM.sh [NIM_DEBFILE] [target Docker image name] [Second Sight enabled (true|false)] [optional: ACM .deb filename]
 ```
 
-this builds the image and pushes it to a private registry. The "Second Sight enabled" parameter (to be set to either "true" or "false") specifies if Second Sight (https://github.com/F5Networks/SecondSight) shall be included in the image being built
+Building the Docker image with NGINX Instance Manager and API Connectivity Manager:
 
-4. Edit `manifests/1.nginx-nim.yaml` and specify the correct image by modifying the "image" line and configure NGINX Instance Manager username, password and the base64-encoded license file for automated license activation:
+```
+./scripts/buildNIM.sh nim-files/nms-instance-manager_2.4.0-614112268_jammy_amd64.deb your.registry.tld/nginx-nim2:tag true nim-files/nms-api-connectivity-manager_1.0.0.587907371_jammy_amd64.deb
+```
+
+Building the Docker image with NGINX Instance Manager only.
+
+```
+./scripts/buildNIM.sh nim-files/nms-instance-manager_2.4.0-614112268_jammy_amd64.deb your.registry.tld/nginx-nim2:tag true
+```
+
+The "Second Sight enabled" parameter (to be set to either "true" or "false") specifies if Second Sight (https://github.com/F5Networks/SecondSight) shall be included in the image being built
+
+4. Edit `manifests/1.nginx-nim.yaml` and specify the correct image by modifying the "image" line and configure NGINX Instance Manager username, password and the base64-encoded license file for automated license activation. In order to use API Connectivity Manager an ACM license is required
 
 ```
 image: your.registry.tld/nginx-nim2:tag
