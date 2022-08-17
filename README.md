@@ -2,31 +2,31 @@
 
 ## Description
 
-This repo creates a docker image for NGINX Instance Manager >= 2.1 (https://docs.nginx.com/nginx-instance-manager/) to run it on Kubernetes/Openshift.
-The image can optionally be built with F5 Telemetry Tracker support (see https://github.com/fabriziofiorucci/F5-Telemetry-Tracker)
+This repo creates a docker image for NGINX Instance Manager >= 2.4.0 (https://docs.nginx.com/nginx-instance-manager/) to run it on Kubernetes/Openshift.
+The image can optionally be built with Second Sight support (see https://github.com/F5Networks/SecondSight)
 
 ## Prerequisites
 
 - Kubernetes/Openshift cluster with dynamic storage provisioner enabled: see the [example](/contrib/pvc-provisioner)
 - NGINX Ingress Controller with `VirtualServer` CRD support (see https://docs.nginx.com/nginx-ingress-controller/configuration/virtualserver-and-virtualserverroute-resources/)
-- Access to F5/NGINX downloads to fetch NGINX Instance Manager >= 2.1 installation .deb file
+- Access to F5/NGINX downloads to fetch NGINX Instance Manager >= 2.4.0 installation .deb file
 - Linux host running Docker to build the image
 
 ## How to build
 
 1. Clone this repo
-2. Download NGINX Instance Manager >= 2.1 .deb installation file for Ubuntu 20.04 "focal_amd64" (ie. `nms-instance-manager_2.1.0-466409269~focal_amd64.deb`) and copy it into `nim-files/`
+2. Download NGINX Instance Manager >= 2.4.0 .deb installation file for Ubuntu 22.04 "focal_amd64" (ie. `nms-instance-manager_2.4.0-614112268_jammy_amd64.deb`) and copy it into `nim-files/`
 3. Build NGINX Instance Manager Docker image using:
 
 ```
-./scripts/buildNIM.sh [NIM_DEBFILE] [target Docker image name] [F5 Telemetry Tracker enabled (true|false)]
+./scripts/buildNIM.sh [NIM_DEBFILE] [target Docker image name] [Second Sight enabled (true|false)]
 
 for instance:
 
-./scripts/buildNIM.sh ./nim-files/nms-instance-manager_2.1.0-466409269~focal_amd64.deb your.registry.tld/nginx-nim2:tag true
+./scripts/buildNIM.sh ./nim-files/nms-instance-manager_2.4.0-614112268_jammy_amd64.deb your.registry.tld/nginx-nim2:tag true
 ```
 
-this builds the image and pushes it to a private registry. The "F5 Telemetry Tracker enabled" parameter (to be set to either "true" or "false") specifies if F5 Telemetry Tracker (https://github.com/fabriziofiorucci/F5-Telemetry-Tracker) shall be included in the image being built
+this builds the image and pushes it to a private registry. The "Second Sight enabled" parameter (to be set to either "true" or "false") specifies if Second Sight (https://github.com/F5Networks/SecondSight) shall be included in the image being built
 
 4. Edit `manifests/1.nginx-nim.yaml` and specify the correct image by modifying the "image" line and configure NGINX Instance Manager username, password and the base64-encoded license file for automated license activation:
 
@@ -66,11 +66,11 @@ env:
     value: "NGINXr0cks"
 ```
 
-5. If F5 Telemetry Tracker was built in the image, configure the relevant environment variables. See the documentation at https://github.com/fabriziofiorucci/F5-Telemetry-Tracker#for-kubernetesopenshift-1
+5. If Second Sight was built in the image, configure the relevant environment variables. See the documentation at https://github.com/F5Networks/SecondSight/#on-kubernetesopenshift
 
 ```
 env:
-  ### F5 Telemetry Tracker Push mode
+  ### Second Sight Push mode
   - name: STATS_PUSH_ENABLE
     #value: "true"
     value: "false"
@@ -105,7 +105,7 @@ NGINX Instance Manager GUI: `https://nginx-nim2.nginx-nim2`
 NGINX Instance Manager gRPC port: `nginx-nim2.nginx-nim2:443`
 
 
-F5 Telemetry Tracker REST API (if enabled at build time - see the documentation at `https://github.com/fabriziofiorucci/F5-Telemetry-Tracker`):
+Second Sight REST API (if enabled at build time - see the documentation at `https://github.com/F5Networks/SecondSight`):
 - `https://nim2.f5.ff.lan/f5tt/instances`
 - `https://nim2.f5.ff.lan/f5tt/metrics`
 - Push mode (configured through env variables in `manifests/1.nginx-nim.yaml`)
@@ -139,7 +139,7 @@ and then restart nginx-agent
 
 ## Tested NGINX Instance Manager releases
 
-This repo has been tested with NIM 2.1.0
+This repo has been tested with NIM 2.4.0
 
 
 ## Additional features
@@ -152,7 +152,7 @@ This repo has been tested with NIM 2.1.0
 ## Docker image build
 
 ```
-$ ./scripts/buildNIM.sh nim-files/nms-instance-manager_2.1.0-508672347~focal_amd64.deb registry.ff.lan:31005/nim2-docker:2.1.0 true
+$ ./scripts/buildNIM.sh nim-files/nms-instance-manager_2.4.0-614112268_jammy_amd64.deb registry.ff.lan:31005/nim2-docker:2.4.0 true
 ```
 
 ## Starting NGINX Instance Manager
@@ -181,7 +181,7 @@ nginx-nim2-679987c54d-7rl6b   1/1     Running   0          5m8s   10.244.1.64   
 NGINX Instance Manager GUI is now reachable from outside the cluster at:
 - Web GUI: `https://nim2.f5.ff.lan`
 - gRPC: `nim2.f5.ff.lan:30443`
-- F5 Telemetry Tracker: see [usage](https://github.com/fabriziofiorucci/F5-Telemetry-Tracker/blob/production/USAGE.md)
+- Second Sight: see [usage](https://github.com/F5Networks/SecondSight/blob/main/USAGE.md)
 
 ## Stopping NGINX Instance Manager
 

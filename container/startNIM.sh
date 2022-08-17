@@ -1,5 +1,16 @@
 #!/bin/bash
 
+# Makes sure that Clickhouse is up and running - dedicated pod
+
+RETCODE=-1
+while [ ! $RETCODE = 0 ]
+do
+        nc -z $NIM_CLICKHOUSE_ADDRESS $NIM_CLICKHOUSE_PORT
+        RETCODE=$?
+	echo "Waiting for ClickHouse..."
+        sleep 3
+done
+
 if [ -f "/deployment/counter.enabled" ]
 then
 	export DATAPLANE_TYPE=NGINX_MANAGEMENT_SYSTEM
@@ -39,18 +50,6 @@ clickhouse_password = $NIM_CLICKHOUSE_PASSWORD
 /bin/bash -c '`which chmod` 0700 /etc/nms/certs/services/core'
 /bin/bash -c '`which chmod` 0600 /etc/nms/certs/services/core/*'
 /usr/bin/nms-core &
-
-# Makes sure that Clickhouse is up and running - dedicated pod
-
-#/etc/init.d/clickhouse-server start
-
-RETCODE=-1
-while [ ! $RETCODE = 0 ]
-do
-        echo "show processlist" | clickhouse-client -h $NIM_CLICKHOUSE_ADDRESS --port $NIM_CLICKHOUSE_PORT -u $NIM_CLICKHOUSE_USERNAME --password $NIM_CLICKHOUSE_PASSWORD >/dev/null 2>/dev/null
-        RETCODE=$?
-        sleep 3
-done
 
 # Start nms dpm - from /lib/systemd/system/nms-dpm.service
 /bin/bash -c '`which mkdir` -p /var/lib/nms/streaming/'

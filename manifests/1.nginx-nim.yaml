@@ -42,7 +42,7 @@ spec:
           - name: NIM_CLICKHOUSE_PASSWORD
             value: "NGINXr0cks"
 
-          ### F5 Telemetry Tracker Push mode
+          ### Second Sight Push mode
           - name: STATS_PUSH_ENABLE
             value: "false"
           - name: STATS_PUSH_MODE
