@@ -16,7 +16,7 @@ The image can optionally be built with Second Sight support (see https://github.
 
 1. Clone this repo
 2. Download NGINX Instance Manager 2.4.0+ .deb installation file for Ubuntu 22.04 "focal_amd64" (ie. `nms-instance-manager_2.4.0-614112268_jammy_amd64.deb`) and copy it into `nim-files/`
-3. Optional: if using API Connectivity Manager 1.0+ .deb installation file for Ubuntu 22.04 "jammy_amdt4" (ie. `nms-api-connectivity-manager_1.0.0.587907371_jammy_amd64.deb`) and copy it into `nim-files/`
+3. Optional: if using API Connectivity Manager 1.0+ .deb installation file for Ubuntu 22.04 "jammy_amd64" (ie. `nms-api-connectivity-manager_1.0.0.587907371_jammy_amd64.deb`) and copy it into `nim-files/`
 3. Build NGINX Instance Manager Docker image using:
 
 ```
