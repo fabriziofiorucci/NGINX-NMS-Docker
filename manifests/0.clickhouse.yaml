@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
       - name: clickhouse
-        image: clickhouse/clickhouse-server
+        image: clickhouse/clickhouse-server:21.3.20
         ports:
         - name: binary
           containerPort: 9000

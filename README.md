@@ -2,8 +2,15 @@
 
 ## Description
 
-This repo creates a docker image for NGINX Instance Manager 2.4.0+ (https://docs.nginx.com/nginx-instance-manager/) to run it on Kubernetes/Openshift.
+This repo creates a docker image for [NGINX Instance Manager](https://docs.nginx.com/nginx-instance-manager/) 2.4.0+ and [NGINX Management Suite API Connectivity Manager](https://docs.nginx.com/nginx-management-suite/acm/) 1.0.0+ to run it on Kubernetes/Openshift.
 The image can optionally be built with Second Sight support (see https://github.com/F5Networks/SecondSight)
+
+## Tested releases
+
+This repository has been tested with:
+
+- NGINX Instance Manager 2.4.0
+- NGINX Management Suite API Connectivity Manager 1.0.0, 1.1.0
 
 ## Prerequisites
 
@@ -144,11 +151,6 @@ grpcPort: 30443
 ```
 
 and then restart nginx-agent
-
-
-## Tested NGINX Instance Manager releases
-
-This repo has been tested with NIM 2.4.0
 
 
 ## Additional features
