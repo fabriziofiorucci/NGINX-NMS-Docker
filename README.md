@@ -10,7 +10,7 @@ The image can optionally be built with Second Sight support (see https://github.
 This repository has been tested with:
 
 - NGINX Instance Manager 2.4.0
-- NGINX Management Suite API Connectivity Manager 1.0.0, 1.1.0
+- NGINX Management Suite API Connectivity Manager 1.0.0, 1.1.0, 1.1.1
 
 ## Prerequisites
 
