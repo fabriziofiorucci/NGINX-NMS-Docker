@@ -52,7 +52,7 @@ spec:
             value: "http://192.168.1.5/callHome"
           ### Push interval in seconds
           - name: STATS_PUSH_INTERVAL
-            value: "10"
+            value: "1800"
 
 ---
 apiVersion: v1

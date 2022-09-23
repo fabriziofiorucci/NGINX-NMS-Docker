@@ -32,8 +32,8 @@ echo -e "
 
 # Clickhouse config
 clickhouse_address = $NIM_CLICKHOUSE_ADDRESS:$NIM_CLICKHOUSE_PORT
-clickhouse_username = $NIM_CLICKHOUSE_USERNAME
-clickhouse_password = $NIM_CLICKHOUSE_PASSWORD
+clickhouse_username = '$NIM_CLICKHOUSE_USERNAME'
+clickhouse_password = '$NIM_CLICKHOUSE_PASSWORD'
 " >> /etc/nms/nms.conf
 
 /etc/init.d/nginx start
