@@ -12,6 +12,7 @@ spec:
     port: 443
     tls:
       enable: true
+    client-max-body-size: 10m
   - name: nginx-nim2-f5tt
     service: nginx-nim2
     port: 5000
