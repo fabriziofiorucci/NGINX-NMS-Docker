@@ -1,4 +1,4 @@
-# NGINX Instance Manager 2 - Docker image
+# NGINX Management Suite - Docker image builder
 
 ## Description
 
@@ -15,6 +15,7 @@ This repository has been tested with:
 ## Prerequisites
 
 - Docker 20.10+ to build the image
+- Private registry to push the target Docker image
 - Kubernetes/Openshift cluster with dynamic storage provisioner enabled: see the [example](/contrib/pvc-provisioner)
 - NGINX Ingress Controller with `VirtualServer` CRD support (see https://docs.nginx.com/nginx-ingress-controller/configuration/virtualserver-and-virtualserverroute-resources/)
 - Access to F5/NGINX downloads to fetch NGINX Instance Manager 2.4.0+ installation .deb file and API Connectivity Manager 1.0+ installation .deb file
@@ -28,22 +29,51 @@ This repository has been tested with:
 3. Build NGINX Instance Manager Docker image using:
 
 ```
-./scripts/buildNIM.sh [NIM_DEBFILE] [target Docker image name] [Second Sight enabled (true|false)] [optional: ACM .deb filename]
+$ ./scripts/buildNIM.sh 
+NGINX Management Suite Docker image builder 
+
+This tool builds a Docker image to run NGINX Management Suite 
+
+=== Usage: 
+
+./scripts/buildNIM.sh [options] 
+
+=== Options: 
+
+-h                     - This help 
+-n [filename]          - The NGINX Instance Manager .deb package filename 
+-a [filename]          - The API Connectivity Manager .deb package filename - optional
+-t [target image]      - The Docker image name to be created 
+-s                     - Enable Second Sight (https://github.com/F5Networks/SecondSight/) - optional
+
+=== Examples: 
+
+./scripts/buildNIM.sh -n nim-files/nms-instance-manager_2.5.1-663136348~jammy_amd64.deb -a nim-files/nms-api-connectivity-manager_1.2.0.668430332~jammy_amd64.deb -t my.registry.tld/nginx-nms:2.5.1
 ```
 
 Building the Docker image with NGINX Instance Manager and API Connectivity Manager:
 
 ```
-./scripts/buildNIM.sh nim-files/nms-instance-manager_2.4.0-614112268_jammy_amd64.deb your.registry.tld/nginx-nim2:tag true nim-files/nms-api-connectivity-manager_1.0.0.587907371_jammy_amd64.deb
+./scripts/buildNIM.sh -n nim-files/nms-instance-manager_2.5.1-663136348~jammy_amd64.deb -a nim-files/nms-api-connectivity-manager_1.2.0.668430332~jammy_amd64.deb -t my.registry.tld/nginx-nms:2.5.1
 ```
 
-Building the Docker image with NGINX Instance Manager only.
+Building the Docker image with NGINX Instance Manager only:
 
 ```
-./scripts/buildNIM.sh nim-files/nms-instance-manager_2.4.0-614112268_jammy_amd64.deb your.registry.tld/nginx-nim2:tag true
+./scripts/buildNIM.sh -n nim-files/nms-instance-manager_2.5.1-663136348~jammy_amd64.deb -t my.registry.tld/nginx-nms:2.5.1
 ```
 
-The "Second Sight enabled" parameter (to be set to either "true" or "false") specifies if Second Sight (https://github.com/F5Networks/SecondSight) shall be included in the image being built
+Building the Docker image with NGINX Instance Manager and Second Sight support:
+
+```
+./scripts/buildNIM.sh -n nim-files/nms-instance-manager_2.5.1-663136348~jammy_amd64.deb -t my.registry.tld/nginx-nms:2.5.1 -s
+```
+
+Building the Docker image with NGINX Instance Manager, API Connectivity Manager and Second Sight support:
+
+```
+./scripts/buildNIM.sh -n nim-files/nms-instance-manager_2.5.1-663136348~jammy_amd64.deb -a nim-files/nms-api-connectivity-manager_1.2.0.668430332~jammy_amd64.deb -t my.registry.tld/nginx-nms:2.5.1 -s
+```
 
 4. Edit `manifests/1.nginx-nim.yaml` and specify the correct image by modifying the "image" line and configure NGINX Instance Manager username, password and the base64-encoded license file for automated license activation. In order to use API Connectivity Manager an ACM license is required
 
@@ -164,7 +194,7 @@ and then restart nginx-agent
 ## Docker image build
 
 ```
-$ ./scripts/buildNIM.sh nim-files/nms-instance-manager_2.4.0-614112268_jammy_amd64.deb registry.ff.lan:31005/nim2-docker:2.4.0 true
+$ ./scripts/buildNIM.sh -n nim-files/nms-instance-manager_2.5.1-663136348~jammy_amd64.deb -a nim-files/nms-api-connectivity-manager_1.2.0.668430332~jammy_amd64.deb -t registry.ff.lan:31005/nim2-docker:2.4.0 -s
 ```
 
 ## Starting NGINX Instance Manager
