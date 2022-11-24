@@ -3,6 +3,7 @@ FROM ubuntu:22.04
 ARG NIM_DEBFILE
 ARG BUILD_WITH_SECONDSIGHT=false
 ARG ACM_IMAGE=nim-files/.placeholder
+ARG SM_IMAGE=nim-files/.placeholder
 
 # Initial setup
 RUN apt-get update && \
@@ -13,6 +14,7 @@ RUN apt-get update && \
 # NGINX Instance Manager 2.4.0+
 COPY $NIM_DEBFILE /deployment/setup/nim.deb
 COPY $ACM_IMAGE /deployment/setup/acm.deb
+COPY $SM_IMAGE /deployment/setup/sm.deb
 
 COPY ./container/startNIM.sh /deployment/
 RUN chmod +x /deployment/startNIM.sh
@@ -27,6 +29,10 @@ RUN apt-get -y install /deployment/setup/nim.deb && \
 # Optional API Connectivity Manager
 RUN if [ "$ACM_IMAGE" != "nim-files/.placeholder" ] ; then \
 	apt-get -y install /deployment/setup/acm.deb; fi
+
+# Optional Security Monitoring
+RUN if [ "$SM_IMAGE" != "nim-files/.placeholder" ] ; then \
+	apt-get -y install /deployment/setup/sm.deb; fi
 
 RUN rm -r /deployment/setup
 

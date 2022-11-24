@@ -11,6 +11,7 @@ This repository has been tested with:
 
 - NGINX Instance Manager 2.4.0, 2.5.0, 2.5.1, 2.6.0
 - NGINX Management Suite API Connectivity Manager 1.0.0, 1.1.0, 1.1.1, 1.2.0
+- Security Monitoring 1.0.0
 
 ## Prerequisites
 
@@ -24,58 +25,39 @@ This repository has been tested with:
 ## How to build
 
 1. Clone this repo
-2. Download NGINX Instance Manager 2.4.0+ .deb installation file for Ubuntu 22.04 "jammy_amd64" (ie. `nms-instance-manager_2.4.0-614112268_jammy_amd64.deb`) and copy it into `nim-files/`
-3. Optional: if using API Connectivity Manager 1.0+ .deb installation file for Ubuntu 22.04 "jammy_amd64" (ie. `nms-api-connectivity-manager_1.0.0.587907371_jammy_amd64.deb`) and copy it into `nim-files/`
-3. Build NGINX Instance Manager Docker image using:
+2. Download NGINX Instance Manager 2.4.0+ .deb installation file for Ubuntu 22.04 "jammy_amd64" (ie. `nms-api-connectivity-manager_1.2.0.668430332~jammy_amd64.deb`) and copy it into `nim-files/`
+3. Optional: download API Connectivity Manager 1.0+ .deb installation file for Ubuntu 22.04 "jammy_amd64" (ie. `nms-api-connectivity-manager_1.2.0.668430332~jammy_amd64.deb`) and copy it into `nim-files/`
+4. Optional: download Security Monitoring .deb installation file for Ubuntu 22.04 "jammy_amd64" (ie. `nms-sm_1.0.0-697204659~jammy_amd64.deb`) and copy it into `nim-files/`
+5. Build NGINX Instance Manager Docker image using:
 
 ```
 $ ./scripts/buildNIM.sh 
-NGINX Management Suite Docker image builder 
+NGINX Management Suite Docker image builder
 
-This tool builds a Docker image to run NGINX Management Suite 
+ This tool builds a Docker image to run NGINX Management Suite
 
-=== Usage: 
+ === Usage:
 
-./scripts/buildNIM.sh [options] 
+ ./scripts/buildNIM.sh [options]
 
-=== Options: 
+ === Options:
 
--h                     - This help 
--n [filename]          - The NGINX Instance Manager .deb package filename 
--a [filename]          - The API Connectivity Manager .deb package filename - optional
--t [target image]      - The Docker image name to be created 
--s                     - Enable Second Sight (https://github.com/F5Networks/SecondSight/) - optional
+ -h                     - This help
+ -n [filename]          - The NGINX Instance Manager .deb package filename
+ -a [filename]          - The API Connectivity Manager .deb package filename - optional
+ -w [filename]          - The Security Monitoring .deb package filename - optional
+ -t [target image]      - The Docker image name to be created
+ -s                     - Enable Second Sight (https://github.com/F5Networks/SecondSight/) - optional
 
-=== Examples: 
+ === Examples:
 
-./scripts/buildNIM.sh -n nim-files/nms-instance-manager_2.5.1-663136348~jammy_amd64.deb -a nim-files/nms-api-connectivity-manager_1.2.0.668430332~jammy_amd64.deb -t my.registry.tld/nginx-nms:2.5.1
+ ./scripts/buildNIM.sh -n nim-files/nms-instance-manager_2.6.0-698150575~jammy_amd64.deb \
+        -a nim-files/nms-api-connectivity-manager_1.2.0.668430332~jammy_amd64.deb \
+        -w nim-files/nms-sm_1.0.0-697204659~jammy_amd64.deb \
+        -t my.registry.tld/nginx-nms:2.6.0
 ```
 
-Building the Docker image with NGINX Instance Manager and API Connectivity Manager:
-
-```
-./scripts/buildNIM.sh -n nim-files/nms-instance-manager_2.5.1-663136348~jammy_amd64.deb -a nim-files/nms-api-connectivity-manager_1.2.0.668430332~jammy_amd64.deb -t my.registry.tld/nginx-nms:2.5.1
-```
-
-Building the Docker image with NGINX Instance Manager only:
-
-```
-./scripts/buildNIM.sh -n nim-files/nms-instance-manager_2.5.1-663136348~jammy_amd64.deb -t my.registry.tld/nginx-nms:2.5.1
-```
-
-Building the Docker image with NGINX Instance Manager and Second Sight support:
-
-```
-./scripts/buildNIM.sh -n nim-files/nms-instance-manager_2.5.1-663136348~jammy_amd64.deb -t my.registry.tld/nginx-nms:2.5.1 -s
-```
-
-Building the Docker image with NGINX Instance Manager, API Connectivity Manager and Second Sight support:
-
-```
-./scripts/buildNIM.sh -n nim-files/nms-instance-manager_2.5.1-663136348~jammy_amd64.deb -a nim-files/nms-api-connectivity-manager_1.2.0.668430332~jammy_amd64.deb -t my.registry.tld/nginx-nms:2.5.1 -s
-```
-
-4. Edit `manifests/1.nginx-nim.yaml` and specify the correct image by modifying the "image" line and configure NGINX Instance Manager username, password and the base64-encoded license file for automated license activation. In order to use API Connectivity Manager an ACM license is required
+6. Edit `manifests/1.nginx-nim.yaml` and specify the correct image by modifying the "image" line and configure NGINX Instance Manager username, password and the base64-encoded license file for automated license activation. In order to use API Connectivity Manager an ACM license is required
 
 ```
 image: your.registry.tld/nginx-nim2:tag
@@ -113,7 +95,7 @@ env:
     value: "NGINXr0cks"
 ```
 
-5. If Second Sight was built in the image, configure the relevant environment variables. See the documentation at https://github.com/F5Networks/SecondSight/#on-kubernetesopenshift
+7. If Second Sight was built in the image, configure the relevant environment variables. See the documentation at https://github.com/F5Networks/SecondSight/#on-kubernetesopenshift
 
 ```
 env:
@@ -132,16 +114,16 @@ env:
     value: "10"
 ```
 
-6. Check / modify files in `/manifests/certs` to customize the TLS certificate and key used for TLS offload
+8. Check / modify files in `/manifests/certs` to customize the TLS certificate and key used for TLS offload
 
-7. Start and stop using
+9. Start and stop using
 
 ```
 ./scripts/nimDockerStart.sh start
 ./scripts/nimDockerStart.sh stop
 ```
 
-8. After starting NGINX Instance Manager it will be accessible from outside the cluster at:
+10. After starting NGINX Instance Manager it will be accessible from outside the cluster at:
 
 NGINX Instance Manager GUI: `https://nim2.f5.ff.lan`
 NGINX Instance Manager gRPC port: `nim2.f5.ff.lan:30443`
@@ -169,7 +151,7 @@ grafana-6f58d455c7-8lk64      1/1     Running   0          5m8s   10.244.2.80   
 nginx-nim2-679987c54d-7rl6b   1/1     Running   0          5m8s   10.244.1.64   f5-node1   <none>           <none>
 ```
 
-9. For NGINX Instances running on VM/bare metal only: after installing the nginx-agent on NGINX Instances to be managed with NGINX Instance Manager 2, update the file `/etc/nginx-agent/nginx-agent.conf` and modify the line:
+11. For NGINX Instances running on VM/bare metal only: after installing the nginx-agent on NGINX Instances to be managed with NGINX Instance Manager 2, update the file `/etc/nginx-agent/nginx-agent.conf` and modify the line:
 
 ```
 grpcPort: 443
@@ -189,15 +171,7 @@ and then restart nginx-agent
 - [Grafana dashboard for telemetry](/contrib/grafana)
 
 
-# Example
-
-## Docker image build
-
-```
-$ ./scripts/buildNIM.sh -n nim-files/nms-instance-manager_2.5.1-663136348~jammy_amd64.deb -a nim-files/nms-api-connectivity-manager_1.2.0.668430332~jammy_amd64.deb -t registry.ff.lan:31005/nim2-docker:2.4.0 -s
-```
-
-## Starting NGINX Instance Manager
+# Starting NGINX Management Suite
 
 ```
 $ ./scripts/nimDockerStart.sh start
@@ -220,12 +194,12 @@ grafana-6f58d455c7-8lk64      1/1     Running   0          5m8s   10.244.2.80   
 nginx-nim2-679987c54d-7rl6b   1/1     Running   0          5m8s   10.244.1.64   f5-node1   <none>           <none>
 ```
 
-NGINX Instance Manager GUI is now reachable from outside the cluster at:
+NGINX Management Suite GUI is now reachable from outside the cluster at:
 - Web GUI: `https://nim2.f5.ff.lan`
 - gRPC: `nim2.f5.ff.lan:30443`
 - Second Sight: see [usage](https://github.com/F5Networks/SecondSight/blob/main/USAGE.md)
 
-## Stopping NGINX Instance Manager
+# Stopping NGINX Management Suite
 
 ```
 $ ./scripts/nimDockerStart.sh stop
