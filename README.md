@@ -1,14 +1,23 @@
-# NGINX Management Suite - Docker image builder
+# NGINX Management Suite for Docker
 
-## Description
+This repository helps deploying NGINX Management Suite on containerized clusters by creating a docker image or deploying the official Helm chart with a simple bash script.
 
-This repo creates a docker image for:
+## Docker image creation
+
+Docker image creation is supported for:
 
 - [NGINX Instance Manager](https://docs.nginx.com/nginx-instance-manager/) 2.4.0+
 - [NGINX Management Suite API Connectivity Manager](https://docs.nginx.com/nginx-management-suite/acm/) 1.0.0+
 - [Security Monitoring](https://docs.nginx.com/nginx-management-suite/admin-guides/installation/install-guide/#install-nms-modules) 1.0.0+
 
-The image can optionally be built with Second Sight support (see https://github.com/F5Networks/SecondSight)
+The image can optionally be built with [Second Sight](https://github.com/F5Networks/SecondSight) support
+
+
+## Deployment through the official Helm chart
+
+A bash script to quickly install NGINX Management Suite through the official Helm chart is available here:
+
+- [Helm installer](contrib/helm-installer)
 
 ## Tested releases
 
@@ -171,9 +180,10 @@ grpcPort: 30443
 and then restart nginx-agent
 
 
-## Additional features
+## Additional tools
 
 - [Grafana dashboard for telemetry](/contrib/grafana)
+- [Helm installer](contrib/helm-installer)
 
 
 # Starting NGINX Management Suite
