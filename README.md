@@ -59,15 +59,15 @@ NGINX Management Suite Docker image builder
  -t [target image]      - The Docker image name to be created
  -s                     - Enable Second Sight (https://github.com/F5Networks/SecondSight/) - optional
 
- Manual install:
+ Manual build:
 
  -n [filename]          - The NGINX Instance Manager .deb package filename
  -a [filename]          - The API Connectivity Manager .deb package filename - optional
  -w [filename]          - The Security Monitoring .deb package filename - optional
 
- Automated install:
+ Automated build:
 
- -i                     - Automated install - requires cert & key
+ -i                     - Automated build - requires cert & key
  -C [file.crt]          - Certificate file to pull packages from the official NGINX repository
  -K [file.key]          - Key file to pull packages from the official NGINX repository
  -A                     - Enable API Connectivity Manager
@@ -75,13 +75,13 @@ NGINX Management Suite Docker image builder
 
  === Examples:
 
- Manual install:
+ Manual build:
         ./scripts/buildNIM.sh -n nim-files/nms-instance-manager_2.6.0-698150575~jammy_amd64.deb \
                 -a nim-files/nms-api-connectivity-manager_1.2.0.668430332~jammy_amd64.deb \
                 -w nim-files/nms-sm_1.0.0-697204659~jammy_amd64.deb \
                 -t my.registry.tld/nginx-nms:2.6.0
 
- Automated install:
+ Automated build:
         ./scripts/buildNIM.sh -i -C nginx-repo.crt -K nginx-repo.key
                 -t my.registry.tld/nginx-nms:2.6.0
 ```

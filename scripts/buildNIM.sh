@@ -8,23 +8,23 @@ $0 [options]\n\n
 -h\t\t\t- This help\n
 -t [target image]\t- The Docker image name to be created\n
 -s\t\t\t- Enable Second Sight (https://github.com/F5Networks/SecondSight/) - optional\n\n
-Manual install:\n\n
+Manual build:\n\n
 -n [filename]\t\t- The NGINX Instance Manager .deb package filename\n
 -a [filename]\t\t- The API Connectivity Manager .deb package filename - optional\n
 -w [filename]\t\t- The Security Monitoring .deb package filename - optional\n\n
-Automated install:\n\n
--i\t\t\t- Automated install - requires cert & key\n
+Automated build:\n\n
+-i\t\t\t- Automated build - requires cert & key\n
 -C [file.crt]\t\t- Certificate file to pull packages from the official NGINX repository\n
 -K [file.key]\t\t- Key file to pull packages from the official NGINX repository\n
 -A\t\t\t- Enable API Connectivity Manager\n
 -W\t\t\t- Enable Security Monitoring\n\n
 === Examples:\n\n
-Manual install:\n
+Manual build:\n
 \t$0 -n nim-files/nms-instance-manager_2.6.0-698150575~jammy_amd64.deb \\\\\n
 \t\t-a nim-files/nms-api-connectivity-manager_1.2.0.668430332~jammy_amd64.deb \\\\\n
 \t\t-w nim-files/nms-sm_1.0.0-697204659~jammy_amd64.deb \\\\\n
 \t\t-t my.registry.tld/nginx-nms:2.6.0\n\n
-Automated install:\n
+Automated build:\n
 \t$0 -i -C nginx-repo.crt -K nginx-repo.key\n
 \t\t-A -W -t my.registry.tld/nginx-nms:2.6.0\n
 "
