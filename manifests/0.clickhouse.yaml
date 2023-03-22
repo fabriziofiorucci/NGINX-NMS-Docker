@@ -30,7 +30,10 @@ spec:
     spec:
       containers:
       - name: clickhouse
-        image: clickhouse/clickhouse-server:21.12.4.1
+        # NGINX Instance Manager up to 2.8.0
+        #image: clickhouse/clickhouse-server:21.12.4.1
+        # NGINX Instance Manager 2.9.0+
+        image: clickhouse/clickhouse-server:23.1.2.9
         ports:
         - name: binary
           containerPort: 9000
