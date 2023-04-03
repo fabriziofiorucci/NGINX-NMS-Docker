@@ -75,7 +75,7 @@ NGINX Management Suite Docker image builder
  -K [file.key]          - Key file to pull packages from the official NGINX repository
  -A                     - Enable API Connectivity Manager - optional
  -W                     - Enable Security Monitoring - optional
- -P [version]           - Enable WAF policy compiler, version can be [v3.1088.2|v4.2.0|v4.100.1] - optional
+ -P [version]           - Enable WAF policy compiler, version can be [v3.1088.2|v4.2.0|v4.100.1|v4.218.0] - optional
 
  === Examples:
 
@@ -88,7 +88,7 @@ NGINX Management Suite Docker image builder
 
  Automated build:
         ./scripts/buildNIM.sh -i -C nginx-repo.crt -K nginx-repo.key
-                -A -W -P v4.2.0 -t my.registry.tld/nginx-nms:2.6.0
+                -A -W -P v4.218.0 -t my.registry.tld/nginx-nms:2.9.0
 ```
 
 ### Automated build
