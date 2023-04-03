@@ -29,7 +29,7 @@ This repository has been tested with:
 - NGINX Instance Manager 2.4.0, 2.5.0, 2.5.1, 2.6.0, 2.7.0, 2.8.0, 2.9.0
 - NGINX Management Suite API Connectivity Manager 1.0.0, 1.1.0, 1.1.1, 1.2.0, 1.3.0, 1.3.1, 1.4.0, 1.4.1, 1.5.0
 - Security Monitoring 1.0.0, 1.1.0, 1.2.0, 1.3.0
-- NGINX App Protect WAF compiler 3.1088.2, 4.2.0, 4.100.1, v4.218.0
+- NGINX App Protect WAF compiler 3.1088.2, 4.2.0, 4.100.1, 4.218.0
 
 ## Prerequisites
 
