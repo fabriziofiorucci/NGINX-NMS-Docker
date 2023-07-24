@@ -19,7 +19,7 @@ Automated build:\n\n
 -K [file.key]\t\t- Key file to pull packages from the official NGINX repository\n
 -A\t\t\t- Enable API Connectivity Manager - optional\n
 -W\t\t\t- Enable Security Monitoring - optional\n
--P [version]\t\t- Enable WAF policy compiler, version can be any [v3.1088.2|v4.2.0|v4.100.1|v4.218.0|v4.279.0] - optional\n
+-P [version]\t\t- Enable WAF policy compiler, version can be any [v3.1088.2|v4.2.0|v4.100.1|v4.218.0|v4.279.0|v4.402.0] - optional\n
 -D\t\t\t- Enable App Delivery Manager - optional\n\n
 === Examples:\n\n
 Manual build:\n
