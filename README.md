@@ -12,7 +12,6 @@ Docker image creation is supported for:
 - [NGINX API Connectivity Manager](https://docs.nginx.com/nginx-management-suite/acm/) 1.0.0+
 - [Security Monitoring](https://docs.nginx.com/nginx-management-suite/security/) 1.0.0+
 - [NGINX App Protect WAF compiler](https://docs.nginx.com/nginx-management-suite/nim/how-to/app-protect/setup-waf-config-management)
-- [NGINX App Delivery Manager](https://docs.nginx.com/nginx-management-suite/adm/) 4.0.0+
 
 The image can optionally be built with [Second Sight](https://github.com/F5Networks/SecondSight) support
 
@@ -30,7 +29,6 @@ This repository has been tested with:
 - NGINX API Connectivity Manager 1.0.0, 1.1.0, 1.1.1, 1.2.0, 1.3.0, 1.3.1, 1.4.0, 1.4.1, 1.5.0, 1.6.0, 1.7.0, 1.8.0, 1.9.0, 1.9.1
 - Security Monitoring 1.0.0, 1.1.0, 1.2.0, 1.3.0, 1.4.0, 1.5.0, 1.6.0, 1.7.0, 1.7.1
 - NGINX App Protect WAF compiler v3.1088.2, v4.100.1, v4.2.0, v4.218.0, v4.279.0, v4.402.0, v4.457.0, v4.583.0
-- NGINX App Delivery Manager 4.0.0
 
 ## Prerequisites
 
@@ -79,7 +77,6 @@ NGINX Management Suite Docker image builder
  -A                     - Enable API Connectivity Manager - optional
  -W                     - Enable Security Monitoring - optional
  -P [version]           - Enable WAF policy compiler, version can be any [v3.1088.2|v4.100.1|v4.2.0|v4.218.0|v4.279.0|v4.402.0|v4.457.0|v4.583.0] - optional
- -D                     - Enable App Delivery Manager - optional
 
  === Examples:
 
@@ -92,7 +89,7 @@ NGINX Management Suite Docker image builder
 
  Automated build:
         ./scripts/buildNIM.sh -i -C nginx-repo.crt -K nginx-repo.key
-                -A -W -P v4.583.0 -D -t my.registry.tld/nginx-nms:latest
+                -A -W -P v4.583.0 -t my.registry.tld/nginx-nms:latest
 ```
 
 ### Automated build
@@ -123,12 +120,6 @@ NGINX Instance Manager, API Connectivity Manager, WAF Policy Compiler and Securi
 
 ```
 ./scripts/buildNIM.sh -t YOUR_DOCKER_REGISTRY/nginx-nim2:automated -i -C certs/nginx-repo.crt -K certs/nginx-repo.key -A -W -P v4.457.0
-```
-
-NGINX Instance Manager, API Connectivity Manager, WAF Policy Compiler, Security Monitoring and App Delivery Manager
-
-```
-./scripts/buildNIM.sh -t YOUR_DOCKER_REGISTRY/nginx-nim2:automated -i -C certs/nginx-repo.crt -K certs/nginx-repo.key -A -W -P v4.457.0 -D
 ```
 
 ### Manual build
