@@ -19,7 +19,7 @@ Automated build:\n\n
 -K [file.key]\t\t- Key file to pull packages from the official NGINX repository\n
 -A\t\t\t- Enable API Connectivity Manager - optional\n
 -W\t\t\t- Enable Security Monitoring - optional\n
--P [version]\t\t- Enable WAF policy compiler, version can be any [v3.1088.2|v4.100.1|v4.2.0|v4.218.0|v4.279.0|v4.402.0|v4.457.0|v4.6.0] - optional\n
+-P [version]\t\t- Enable WAF policy compiler, version can be any [v3.1088.2|v4.100.1|v4.2.0|v4.218.0|v4.279.0|v4.402.0|v4.457.0|v4.583.0] - optional\n
 -D\t\t\t- Enable App Delivery Manager - optional\n\n
 === Examples:\n\n
 Manual build:\n
@@ -30,7 +30,7 @@ Manual build:\n
 \t\t-t my.registry.tld/nginx-nms:2.6.0\n\n
 Automated build:\n
 \t$0 -i -C nginx-repo.crt -K nginx-repo.key\n
-\t\t-A -W -P v4.6.0 -D -t my.registry.tld/nginx-nms:2.14.1\n
+\t\t-A -W -P v4.583.0 -D -t my.registry.tld/nginx-nms:latest\n
 "
 
 # Defaults
