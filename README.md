@@ -84,7 +84,7 @@ NGINX Management Suite Docker image builder
 
  Automated build:
         ./scripts/buildNIM.sh -i -C nginx-repo.crt -K nginx-repo.key
-                -A -W -P v4.583.0 -t my.registry.tld/nginx-nms:latest
+                -W -P v4.583.0 -t my.registry.tld/nginx-nms:latest
 ```
 
 ### Automated build
